@@ -2,7 +2,7 @@
  * 五子棋游戏 (MVC) 的 Controller 层
  */
 class GobangViewController {
-    gameView: GobangView
+    gameView: GobangView //控制器持有对其视图的引用
     brain: GobangBrain
 
     constructor() {
@@ -10,7 +10,7 @@ class GobangViewController {
         this.brain = new GobangBrain()
     }
 
-    handleClickEvent(x: number, y: number) {
+    public handleClickEvent(x: number, y: number) {
         let col = Math.round(x / this.gameView.horizontalLineGap)
         let row = Math.round(y / this.gameView.verticalLineGap)
         this.brain.putChessOn(row, col)

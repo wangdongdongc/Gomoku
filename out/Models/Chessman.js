@@ -5,7 +5,8 @@ var Chessman;
 (function (Chessman) {
     Chessman[Chessman["None"] = 0] = "None";
     Chessman[Chessman["Black"] = 1] = "Black";
-    Chessman[Chessman["White"] = 2] = "White"; //= Player.White
+    Chessman[Chessman["White"] = 2] = "White"; //should equal Player.White
+    //Todo: keep consistency between Player and Chessman
 })(Chessman || (Chessman = {}));
 /**
  * 返回玩家所持有的棋子

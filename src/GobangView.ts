@@ -2,7 +2,7 @@
  * 五子棋游戏 (MVC) 的 View 层
  */
 class GobangView extends CanvasView {
-    private chessboardStyle: ChessboardStyle = {
+    private readonly chessboardStyle: ChessboardStyle = {
         originX: 0,
         originY: 0,
         width: this.bound.width,
@@ -13,14 +13,13 @@ class GobangView extends CanvasView {
         borderColor: "black",
         backgroudColor: "rgb(212,212,212)" 
     }
-    
-    private  styleForBlackChess = {
+    private readonly styleForBlackChess = {
         radius: 13,
         borderWidth: 1,
         borderColor: "grey",
         fillColor: "rgb(57,57,57)"
     }
-    private  styleForWhiteChess = {
+    private readonly styleForWhiteChess = {
         radius: 13,
         borderWidth: 1,
         borderColor: "grey",
@@ -35,7 +34,7 @@ class GobangView extends CanvasView {
     }
 
     /**
-     * 视图的控制器
+     * 视图持有对其控制器的引用
      */
     viewController: GobangViewController
 
@@ -47,13 +46,24 @@ class GobangView extends CanvasView {
     }
 
     /**
-     * 注册事件, 将事件交由Controller处理
-     *  警告: 如果将控制器的方法作为闭包直接回调, this指针将无法指向正确的对象
+     * 在第i行第j列放置一个棋子 (无越界检查)
+     * @param {number} row 第i行(1 ~ 15)
+     * @param {number} col 第j列(1 ~ 15)
      */
-    registerEvents() {
-        this.addEventListener("click", (event: MouseEvent) => {
-            this.viewController.handleClickEvent(event.offsetX, event.offsetY)
-        })
+    public putChessOn(row: number, col: number, chess: Chessman) {
+        if (chess == Chessman.None) return
+        let coord = this.getChessPosition(row, col)
+        let style = chess == Chessman.Black ? 
+                    this.styleForBlackChess : 
+                    this.styleForWhiteChess
+        new ChessmanShape({
+            centerX: coord.x,
+            centerY: coord.y,
+            radius: style.radius,
+            borderColor: style.borderColor,
+            borderWidth: style.borderWidth,
+            fillColor: style.fillColor
+        }).drawOn(this.context)
     }
 
     /**
@@ -69,25 +79,22 @@ class GobangView extends CanvasView {
     }
 
     /**
-     * 在第i行第j列放置一个棋子 (无越界检查)
-     * @param {number} row 第i行(1 ~ 15)
-     * @param {number} col 第j列(1 ~ 15)
+     * 绘制棋盘
      */
-    putChessOn(row: number, col: number, chess: Chessman) {
-        if (chess == Chessman.None) return
-        let coord = this.getChessPosition(row, col)
-        let style = (chess == Chessman.Black) ? this.styleForBlackChess : this.styleForWhiteChess
-        new ChessmanShape({
-            centerX: coord.x,
-            centerY: coord.y,
-            radius: style.radius,
-            borderColor: style.borderColor,
-            borderWidth: style.borderWidth,
-            fillColor: style.fillColor
-        }).drawOn(this.context)
-    }
-
     private drawChessboard() {
         new ChessboardShape(this.chessboardStyle).drawOn(this.context)
     }
+
+    /**
+     * 注册Canvas事件, 设置事件处理函数 (将事件交由Controller处理)
+     * 
+     *  警告: 不能直接将控制器的方法作为闭包传入回调
+     *        这将导致控制器方法中的this指针指向canvas对象而不是控制器对象
+     */
+    private registerEvents() {
+        this.addEventListener("click", (event: MouseEvent) => {
+            this.viewController.handleClickEvent(event.offsetX, event.offsetY)
+        })
+    }
+
 }

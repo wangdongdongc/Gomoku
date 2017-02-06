@@ -21,17 +21,21 @@ class Chessboard {
             this.chessboard.push(row)
         }
     }
+
     hasChessOn(row: number, col: number): boolean {
         return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chessman.None : undefined
     }
+
     getChessOn(row: number, col: number): Chessman {
         return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] : undefined
     }
+
     setChessOn(row: number, col: number, chess: Chessman) {
         if (this.validRowAndCol(row, col)) {
             this.chessboard[row - 1][col - 1] = chess
         }
     }
+    
     validRowAndCol(row: number, col: number): boolean {
         return 1 <= row && row <= this.numberOfRows
             && 1 <= col && col <= this.numberOfColumns ?

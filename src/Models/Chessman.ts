@@ -3,8 +3,9 @@
  */
 enum Chessman {
     None = 0,
-    Black = 1, //= Player.Black
-    White = 2  //= Player.White
+    Black = 1, //should equal Player.Black 
+    White = 2  //should equal Player.White
+    //Todo: keep consistency between Player and Chessman
 }
 
 /**

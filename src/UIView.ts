@@ -1,21 +1,28 @@
 interface Viewbound {
-    //Todo
+    /**
+     * 画布的宽度
+     */
+    width: number
+    /**
+     * 画布的高度
+     */
+    height: number
 }
 
 /**
  * 包含 Canvas 元素的视图
  */
-class UIView {
+abstract class UIView {
     private canvas = <HTMLCanvasElement>document.getElementById("game")
     protected context = <CanvasRenderingContext2D>this.canvas.getContext("2d")
 
-    setUpContext() {
-        //set up
+    addEventListener(event: string, callback: (MouseEvent)=>void) {
+        this.canvas.addEventListener(event, callback)
     }
+
     constructor(width: number, height: number) {
         this.canvas.width = width
         this.canvas.height = height
-        this.setUpContext
     }
 
     protected get midX(): number {
@@ -25,9 +32,13 @@ class UIView {
         return this.canvas.height / 2
     }
 
+    /**
+     * 画布的边界对象
+     */
     get bound(): Viewbound {
         return {
-            //Todo
+            width: this.canvas.width,
+            height: this.canvas.height
         }
     }
 

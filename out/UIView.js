@@ -7,10 +7,9 @@ var UIView = (function () {
         this.context = this.canvas.getContext("2d");
         this.canvas.width = width;
         this.canvas.height = height;
-        this.setUpContext;
     }
-    UIView.prototype.setUpContext = function () {
-        //set up
+    UIView.prototype.addEventListener = function (event, callback) {
+        this.canvas.addEventListener(event, callback);
     };
     Object.defineProperty(UIView.prototype, "midX", {
         get: function () {
@@ -27,8 +26,14 @@ var UIView = (function () {
         configurable: true
     });
     Object.defineProperty(UIView.prototype, "bound", {
+        /**
+         * 画布的边界对象
+         */
         get: function () {
-            return {};
+            return {
+                width: this.canvas.width,
+                height: this.canvas.height
+            };
         },
         enumerable: true,
         configurable: true

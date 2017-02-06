@@ -14,6 +14,7 @@ var Circle = (function (_super) {
     __extends(Circle, _super);
     function Circle(centerX, centerY, radius) {
         var _this = _super.call(this, centerX, centerY) || this;
+        _this.fill = false;
         _this.radius = radius;
         return _this;
     }
@@ -57,6 +58,10 @@ var Circle = (function (_super) {
         ctx.strokeStyle = this.strokeColor;
         ctx.lineWidth = this.lineWidth;
         ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI);
+        if (this.fill) {
+            ctx.fillStyle = this.fillColor;
+            ctx.fill();
+        }
         ctx.stroke();
         ctx.restore();
     };

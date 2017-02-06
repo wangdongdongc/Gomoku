@@ -7,6 +7,7 @@
  */
 class Circle extends Shape {
     radius: number
+    fill: boolean = false
     get centerX(): number {
         return this.originX
     }
@@ -36,6 +37,10 @@ class Circle extends Shape {
         ctx.strokeStyle = this.strokeColor
         ctx.lineWidth = this.lineWidth
         ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI)
+        if (this.fill) {
+            ctx.fillStyle = this.fillColor
+            ctx.fill()
+        }
         ctx.stroke()
         ctx.restore()
     }

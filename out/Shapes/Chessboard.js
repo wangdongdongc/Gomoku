@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- * 棋盘：
+ * 棋盘：(一个方形)
  *  标准的 15x15 的五子棋棋盘
  *
  * 棋盘样式由一个 ChessboardStyle 对象指定

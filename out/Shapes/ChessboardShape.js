@@ -4,14 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- * 棋盘：(一个方形)
+ * 棋盘图形：(一个方形)
  *  标准的 15x15 的五子棋棋盘
  *
  * 棋盘样式由一个 ChessboardStyle 对象指定
  */
-var Chessboard = (function (_super) {
-    __extends(Chessboard, _super);
-    function Chessboard(style) {
+var ChessboardShape = (function (_super) {
+    __extends(ChessboardShape, _super);
+    function ChessboardShape(style) {
         var _this = 
         //边框
         _super.call(this, style.originX, style.originY, style.width, style.height) || this;
@@ -41,7 +41,7 @@ var Chessboard = (function (_super) {
         }
         return _this;
     }
-    Chessboard.prototype.drawOn = function (ctx) {
+    ChessboardShape.prototype.drawOn = function (ctx) {
         ctx.save();
         this.fill = true;
         _super.prototype.drawOn.call(this, ctx);
@@ -53,6 +53,6 @@ var Chessboard = (function (_super) {
         }
         ctx.restore();
     };
-    return Chessboard;
+    return ChessboardShape;
 }(Rectangle));
-//# sourceMappingURL=Chessboard.js.map
+//# sourceMappingURL=ChessboardShape.js.map

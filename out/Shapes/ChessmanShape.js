@@ -4,12 +4,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- * 棋子：
+ * 棋子图形：
  *  一个圆
  */
-var Chessman = (function (_super) {
-    __extends(Chessman, _super);
-    function Chessman(style) {
+var ChessmanShape = (function (_super) {
+    __extends(ChessmanShape, _super);
+    function ChessmanShape(style) {
         var _this = _super.call(this, style.centerX, style.centerY, style.radius) || this;
         _this.borderWidth = style.borderWidth;
         _this.borderColor = style.borderColor;
@@ -17,9 +17,9 @@ var Chessman = (function (_super) {
         _this.fillColor = style.fillColor;
         return _this;
     }
-    Chessman.prototype.drawOn = function (ctx) {
+    ChessmanShape.prototype.drawOn = function (ctx) {
         _super.prototype.drawOn.call(this, ctx);
     };
-    return Chessman;
+    return ChessmanShape;
 }(Circle));
-//# sourceMappingURL=Chessman.js.map
+//# sourceMappingURL=ChessmanShape.js.map

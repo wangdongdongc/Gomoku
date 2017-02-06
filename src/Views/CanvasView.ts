@@ -1,4 +1,7 @@
-interface Viewbound {
+/**
+ * 画布的边界
+ */
+interface Bound {
     /**
      * 画布的宽度
      */
@@ -10,10 +13,16 @@ interface Viewbound {
 }
 
 /**
- * 包含 Canvas 元素的视图
+ * 集成 Canvas 元素的视图类
  */
-abstract class UIView {
+abstract class CanvasView {
+    /**
+     * canvas元素
+     */
     private canvas = <HTMLCanvasElement>document.getElementById("game")
+    /**
+     * canvas元素的绘制环境(2D)
+     */
     protected context = <CanvasRenderingContext2D>this.canvas.getContext("2d")
 
     addEventListener(event: string, callback: (MouseEvent)=>void) {
@@ -35,7 +44,7 @@ abstract class UIView {
     /**
      * 画布的边界对象
      */
-    get bound(): Viewbound {
+    get bound(): Bound {
         return {
             width: this.canvas.width,
             height: this.canvas.height

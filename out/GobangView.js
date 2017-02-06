@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- * 五子棋游戏的视图
+ * 五子棋游戏 (MVC) 的 View 层
  */
 var GobangView = (function (_super) {
     __extends(GobangView, _super);
@@ -20,6 +20,18 @@ var GobangView = (function (_super) {
             borderWidth: 1,
             borderColor: "black",
             backgroudColor: "rgb(212,212,212)"
+        };
+        _this.styleForBlackChess = {
+            radius: 13,
+            borderWidth: 1,
+            borderColor: "grey",
+            fillColor: "rgb(57,57,57)"
+        };
+        _this.styleForWhiteChess = {
+            radius: 13,
+            borderWidth: 1,
+            borderColor: "grey",
+            fillColor: "white"
         };
         _this.viewController = viewController;
         _this.drawChessboard();
@@ -41,7 +53,8 @@ var GobangView = (function (_super) {
         configurable: true
     });
     /**
-     * 注册事件, 并将事件交由Controller处理
+     * 注册事件, 将事件交由Controller处理
+     *  警告: 如果将控制器的方法作为闭包直接回调, this指针将无法指向正确的对象
      */
     GobangView.prototype.registerEvents = function () {
         var _this = this;
@@ -66,11 +79,11 @@ var GobangView = (function (_super) {
      * @param {number} col 第j列(1 ~ 15)
      */
     GobangView.prototype.putChessOn = function (row, col, chess) {
-        if (chess == Chess.None)
+        if (chess == Chessman.None)
             return;
         var coord = this.getChessPosition(row, col);
-        var style = (chess == Chess.Black) ? GobangView.styleForBlackChess : GobangView.styleForWhiteChess;
-        new Chessman({
+        var style = (chess == Chessman.Black) ? this.styleForBlackChess : this.styleForWhiteChess;
+        new ChessmanShape({
             centerX: coord.x,
             centerY: coord.y,
             radius: style.radius,
@@ -80,20 +93,8 @@ var GobangView = (function (_super) {
         }).drawOn(this.context);
     };
     GobangView.prototype.drawChessboard = function () {
-        new Chessboard(this.chessboardStyle).drawOn(this.context);
+        new ChessboardShape(this.chessboardStyle).drawOn(this.context);
     };
     return GobangView;
-}(UIView));
-GobangView.styleForBlackChess = {
-    radius: 13,
-    borderWidth: 1,
-    borderColor: "grey",
-    fillColor: "rgb(57,57,57)"
-};
-GobangView.styleForWhiteChess = {
-    radius: 13,
-    borderWidth: 1,
-    borderColor: "grey",
-    fillColor: "white"
-};
+}(CanvasView));
 //# sourceMappingURL=GobangView.js.map

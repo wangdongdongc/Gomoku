@@ -1,8 +1,8 @@
 /**
- * 五子棋游戏的视图
+ * 五子棋游戏 (MVC) 的 View 层
  */
-class GobangView extends UIView {
-    chessboardStyle: ChessboardStyle = {
+class GobangView extends CanvasView {
+    private chessboardStyle: ChessboardStyle = {
         originX: 0,
         originY: 0,
         width: this.bound.width,
@@ -14,13 +14,13 @@ class GobangView extends UIView {
         backgroudColor: "rgb(212,212,212)" 
     }
     
-    static styleForBlackChess = {
+    private  styleForBlackChess = {
         radius: 13,
         borderWidth: 1,
         borderColor: "grey",
         fillColor: "rgb(57,57,57)"
     }
-    static styleForWhiteChess = {
+    private  styleForWhiteChess = {
         radius: 13,
         borderWidth: 1,
         borderColor: "grey",
@@ -47,7 +47,8 @@ class GobangView extends UIView {
     }
 
     /**
-     * 注册事件, 并将事件交由Controller处理
+     * 注册事件, 将事件交由Controller处理
+     *  警告: 如果将控制器的方法作为闭包直接回调, this指针将无法指向正确的对象
      */
     registerEvents() {
         this.addEventListener("click", (event: MouseEvent) => {
@@ -72,11 +73,11 @@ class GobangView extends UIView {
      * @param {number} row 第i行(1 ~ 15)
      * @param {number} col 第j列(1 ~ 15)
      */
-    putChessOn(row: number, col: number, chess: Chess) {
-        if (chess == Chess.None) return
+    putChessOn(row: number, col: number, chess: Chessman) {
+        if (chess == Chessman.None) return
         let coord = this.getChessPosition(row, col)
-        let style = (chess == Chess.Black) ? GobangView.styleForBlackChess : GobangView.styleForWhiteChess
-        new Chessman({
+        let style = (chess == Chessman.Black) ? this.styleForBlackChess : this.styleForWhiteChess
+        new ChessmanShape({
             centerX: coord.x,
             centerY: coord.y,
             radius: style.radius,
@@ -87,6 +88,6 @@ class GobangView extends UIView {
     }
 
     private drawChessboard() {
-        new Chessboard(this.chessboardStyle).drawOn(this.context)
+        new ChessboardShape(this.chessboardStyle).drawOn(this.context)
     }
 }

@@ -1,3 +1,6 @@
+/**
+ * 五子棋游戏 (MVC) 的 Controller 层
+ */
 class GobangViewController {
     gameView: GobangView
     brain: GobangBrain
@@ -14,7 +17,7 @@ class GobangViewController {
         this.gameView.putChessOn(
             this.brain.lastAction.row, 
             this.brain.lastAction.col, 
-            this.brain.lastAction.chess
+            chessOfPlayer(this.brain.lastAction.player)
         )
     }
 }

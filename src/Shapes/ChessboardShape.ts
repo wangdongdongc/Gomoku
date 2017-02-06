@@ -11,12 +11,12 @@ interface ChessboardStyle {
 }
 
 /**
- * 棋盘：(一个方形)
+ * 棋盘图形：(一个方形)
  *  标准的 15x15 的五子棋棋盘
  * 
  * 棋盘样式由一个 ChessboardStyle 对象指定
  */
-class Chessboard extends Rectangle {
+class ChessboardShape extends Rectangle {
     readonly numberOfHorizontalLines = 15
     readonly numberOfVerticalLines = 15
     verticalLines: Line[]

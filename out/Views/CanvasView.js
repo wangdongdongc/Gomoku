@@ -1,31 +1,37 @@
 /**
- * 包含 Canvas 元素的视图
+ * 集成 Canvas 元素的视图类
  */
-var UIView = (function () {
-    function UIView(width, height) {
+var CanvasView = (function () {
+    function CanvasView(width, height) {
+        /**
+         * canvas元素
+         */
         this.canvas = document.getElementById("game");
+        /**
+         * canvas元素的绘制环境(2D)
+         */
         this.context = this.canvas.getContext("2d");
         this.canvas.width = width;
         this.canvas.height = height;
     }
-    UIView.prototype.addEventListener = function (event, callback) {
+    CanvasView.prototype.addEventListener = function (event, callback) {
         this.canvas.addEventListener(event, callback);
     };
-    Object.defineProperty(UIView.prototype, "midX", {
+    Object.defineProperty(CanvasView.prototype, "midX", {
         get: function () {
             return this.canvas.width / 2;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(UIView.prototype, "midY", {
+    Object.defineProperty(CanvasView.prototype, "midY", {
         get: function () {
             return this.canvas.height / 2;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(UIView.prototype, "bound", {
+    Object.defineProperty(CanvasView.prototype, "bound", {
         /**
          * 画布的边界对象
          */
@@ -38,6 +44,6 @@ var UIView = (function () {
         enumerable: true,
         configurable: true
     });
-    return UIView;
+    return CanvasView;
 }());
-//# sourceMappingURL=UIView.js.map
+//# sourceMappingURL=CanvasView.js.map

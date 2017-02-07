@@ -1,27 +1,27 @@
 /**
  * 五子棋游戏 (MVC) 的 View 层
  */
-class GobangView extends CanvasView {
+class GomokuView extends CanvasView {
     private readonly chessboardStyle: ChessboardStyle = {
         originX: 0,
         originY: 0,
         width: this.bound.width,
         height: this.bound.height,
-        lineWidth: 1.5,
-        lineColor: "black",
-        borderWidth: 1,
-        borderColor: "black",
-        backgroudColor: "rgb(212,212,212)" 
+        lineWidth: 1,
+        lineColor: "grey",
+        borderWidth: 0.5,
+        borderColor: "grey",
+        backgroudColor: "rgb(230,230,230)" 
     }
     private readonly styleForBlackChess = {
         radius: 13,
         borderWidth: 1,
-        borderColor: "grey",
-        fillColor: "rgb(57,57,57)"
+        borderColor: "rgb(210,210,210)",
+        fillColor: "rgb(77,77,77)"
     }
     private readonly styleForWhiteChess = {
         radius: 13,
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor: "grey",
         fillColor: "white"
     }
@@ -36,9 +36,9 @@ class GobangView extends CanvasView {
     /**
      * 视图持有对其控制器的引用
      */
-    viewController: GobangViewController
+    viewController: GomokuViewController
 
-    constructor(width: number, height: number, viewController: GobangViewController) {
+    constructor(width: number, height: number, viewController: GomokuViewController) {
         super(width, height)
         this.viewController = viewController
         this.drawChessboard()

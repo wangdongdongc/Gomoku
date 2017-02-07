@@ -1,13 +1,13 @@
 /**
  * 五子棋游戏 (MVC) 的 Controller 层
  */
-class GobangViewController {
-    gameView: GobangView //控制器持有对其视图的引用
-    brain: GobangBrain
+class GomokuViewController {
+    gameView: GomokuView //控制器持有对其视图的引用
+    brain: GomokuBrain
 
     constructor() {
-        this.gameView = new GobangView(480, 480, this)
-        this.brain = new GobangBrain()
+        this.gameView = new GomokuView(480, 480, this)
+        this.brain = new GomokuBrain()
     }
 
     public handleClickEvent(x: number, y: number) {

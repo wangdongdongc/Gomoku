@@ -1,8 +1,8 @@
 /**
  * 五子棋游戏 (MVC) 的 Model 层
  */
-var GobangBrain = (function () {
-    function GobangBrain() {
+var GomokuBrain = (function () {
+    function GomokuBrain() {
         this.maxRow = 15;
         this.maxCol = 15;
         this.currentPlayer = Player.Black; //黑子先行
@@ -16,7 +16,7 @@ var GobangBrain = (function () {
      * @param {number} row 行坐标
      * @param {number} col 列坐标
      */
-    GobangBrain.prototype.putChessOn = function (row, col) {
+    GomokuBrain.prototype.putChessOn = function (row, col) {
         if (this.gameIsOver)
             return;
         if (this.chessboard.validRowAndCol(row, col) && !this.chessboard.hasChessOn(row, col)) {
@@ -40,7 +40,7 @@ var GobangBrain = (function () {
      *  (以最近的一次落子坐标为基准,分别检查横向、纵向、主对角线、副对角线方向是否存在获胜棋组
      *   并保存获胜棋组)
      */
-    GobangBrain.prototype.checkLastAction = function () {
+    GomokuBrain.prototype.checkLastAction = function () {
         this.checkRow(this.lastAction.row, this.lastAction.player);
         this.checkColumn(this.lastAction.col, this.lastAction.player);
         this.checkMainDiagonal(this.lastAction.row, this.lastAction.col, this.lastAction.player);
@@ -51,7 +51,7 @@ var GobangBrain = (function () {
      * @param {number} row 行坐标
      * @param {Player} forPlayer 指定的玩家
      */
-    GobangBrain.prototype.checkRow = function (row, forPlayer) {
+    GomokuBrain.prototype.checkRow = function (row, forPlayer) {
         if (this.gameIsOver)
             return;
         this.winningChesses = [];
@@ -73,7 +73,7 @@ var GobangBrain = (function () {
      * @param {number} col 列坐标
      * @param {Player} forPlayer 玩家
      */
-    GobangBrain.prototype.checkColumn = function (col, forPlayer) {
+    GomokuBrain.prototype.checkColumn = function (col, forPlayer) {
         if (this.gameIsOver)
             return;
         for (var row = 1; row <= this.maxRow; row++) {
@@ -95,7 +95,7 @@ var GobangBrain = (function () {
      * @param {number} col 列坐标
      * @param {Player} forPlayer 玩家
      */
-    GobangBrain.prototype.checkMainDiagonal = function (row, col, forPlayer) {
+    GomokuBrain.prototype.checkMainDiagonal = function (row, col, forPlayer) {
         if (this.gameIsOver)
             return;
         var fromR, fromC, toR, toC;
@@ -132,7 +132,7 @@ var GobangBrain = (function () {
      * @param {number} col 列坐标
      * @param {Player} forPlayer 玩家
      */
-    GobangBrain.prototype.checkSubDiagonal = function (row, col, forPlayer) {
+    GomokuBrain.prototype.checkSubDiagonal = function (row, col, forPlayer) {
         if (this.gameIsOver)
             return;
         var fromR, fromC, toR, toC;
@@ -163,6 +163,6 @@ var GobangBrain = (function () {
             fromC--;
         }
     };
-    return GobangBrain;
+    return GomokuBrain;
 }());
-//# sourceMappingURL=GobangBrain.js.map
+//# sourceMappingURL=GomokuBrain.js.map

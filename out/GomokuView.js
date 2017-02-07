@@ -6,30 +6,30 @@ var __extends = (this && this.__extends) || function (d, b) {
 /**
  * 五子棋游戏 (MVC) 的 View 层
  */
-var GobangView = (function (_super) {
-    __extends(GobangView, _super);
-    function GobangView(width, height, viewController) {
+var GomokuView = (function (_super) {
+    __extends(GomokuView, _super);
+    function GomokuView(width, height, viewController) {
         var _this = _super.call(this, width, height) || this;
         _this.chessboardStyle = {
             originX: 0,
             originY: 0,
             width: _this.bound.width,
             height: _this.bound.height,
-            lineWidth: 1.5,
-            lineColor: "black",
-            borderWidth: 1,
-            borderColor: "black",
-            backgroudColor: "rgb(212,212,212)"
+            lineWidth: 1,
+            lineColor: "grey",
+            borderWidth: 0.5,
+            borderColor: "grey",
+            backgroudColor: "rgb(230,230,230)"
         };
         _this.styleForBlackChess = {
             radius: 13,
             borderWidth: 1,
-            borderColor: "grey",
-            fillColor: "rgb(57,57,57)"
+            borderColor: "rgb(210,210,210)",
+            fillColor: "rgb(77,77,77)"
         };
         _this.styleForWhiteChess = {
             radius: 13,
-            borderWidth: 1,
+            borderWidth: 0.5,
             borderColor: "grey",
             fillColor: "white"
         };
@@ -38,14 +38,14 @@ var GobangView = (function (_super) {
         _this.registerEvents();
         return _this;
     }
-    Object.defineProperty(GobangView.prototype, "horizontalLineGap", {
+    Object.defineProperty(GomokuView.prototype, "horizontalLineGap", {
         get: function () {
             return this.bound.height / 16;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(GobangView.prototype, "verticalLineGap", {
+    Object.defineProperty(GomokuView.prototype, "verticalLineGap", {
         get: function () {
             return this.bound.width / 16;
         },
@@ -57,7 +57,7 @@ var GobangView = (function (_super) {
      * @param {number} row 第i行(1 ~ 15)
      * @param {number} col 第j列(1 ~ 15)
      */
-    GobangView.prototype.putChessOn = function (row, col, chess) {
+    GomokuView.prototype.putChessOn = function (row, col, chess) {
         if (chess == Chessman.None)
             return;
         var coord = this.getChessPosition(row, col);
@@ -78,7 +78,7 @@ var GobangView = (function (_super) {
      * @param {number} row 第i行(1 ~ 15)
      * @param {number} col 第j列(1 ~ 15)
      */
-    GobangView.prototype.getChessPosition = function (row, col) {
+    GomokuView.prototype.getChessPosition = function (row, col) {
         return {
             x: this.chessboardStyle.originY + col * (this.chessboardStyle.height / 16),
             y: this.chessboardStyle.originX + row * (this.chessboardStyle.width / 16)
@@ -87,7 +87,7 @@ var GobangView = (function (_super) {
     /**
      * 绘制棋盘
      */
-    GobangView.prototype.drawChessboard = function () {
+    GomokuView.prototype.drawChessboard = function () {
         new ChessboardShape(this.chessboardStyle).drawOn(this.context);
     };
     /**
@@ -96,12 +96,12 @@ var GobangView = (function (_super) {
      *  警告: 不能直接将控制器的方法作为闭包传入回调
      *        这将导致控制器方法中的this指针指向canvas对象而不是控制器对象
      */
-    GobangView.prototype.registerEvents = function () {
+    GomokuView.prototype.registerEvents = function () {
         var _this = this;
         this.addEventListener("click", function (event) {
             _this.viewController.handleClickEvent(event.offsetX, event.offsetY);
         });
     };
-    return GobangView;
+    return GomokuView;
 }(CanvasView));
-//# sourceMappingURL=GobangView.js.map
+//# sourceMappingURL=GomokuView.js.map

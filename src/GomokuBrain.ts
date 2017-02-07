@@ -4,7 +4,7 @@
  * 
  * row与col的取值均为1-15
  */
-interface GobangAction {
+interface GomokuAction {
     row: number
     col: number
     player: Player
@@ -13,12 +13,12 @@ interface GobangAction {
 /**
  * 五子棋游戏 (MVC) 的 Model 层
  */
-class GobangBrain {
+class GomokuBrain {
     readonly maxRow = 15
     readonly maxCol = 15
 
     chessboard: Chessboard
-    lastAction: GobangAction
+    lastAction: GomokuAction
     currentPlayer: Player = Player.Black //黑子先行
     gameIsOver: boolean = false
     winningChesses: Chessman[]

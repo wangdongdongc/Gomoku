@@ -1,17 +1,17 @@
 /**
  * 五子棋游戏 (MVC) 的 Controller 层
  */
-var GobangViewController = (function () {
-    function GobangViewController() {
-        this.gameView = new GobangView(480, 480, this);
-        this.brain = new GobangBrain();
+var GomokuViewController = (function () {
+    function GomokuViewController() {
+        this.gameView = new GomokuView(480, 480, this);
+        this.brain = new GomokuBrain();
     }
-    GobangViewController.prototype.handleClickEvent = function (x, y) {
+    GomokuViewController.prototype.handleClickEvent = function (x, y) {
         var col = Math.round(x / this.gameView.horizontalLineGap);
         var row = Math.round(y / this.gameView.verticalLineGap);
         this.brain.putChessOn(row, col);
         this.gameView.putChessOn(this.brain.lastAction.row, this.brain.lastAction.col, chessOfPlayer(this.brain.lastAction.player));
     };
-    return GobangViewController;
+    return GomokuViewController;
 }());
-//# sourceMappingURL=GobangViewController.js.map
+//# sourceMappingURL=GomokuViewController.js.map

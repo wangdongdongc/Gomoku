@@ -19,17 +19,19 @@ abstract class CanvasView {
     /**
      * canvas元素
      */
-    private canvas = <HTMLCanvasElement>document.getElementById("game")
+    private canvas
     /**
      * canvas元素的绘制环境(2D)
      */
-    protected context = <CanvasRenderingContext2D>this.canvas.getContext("2d")
+    protected context
 
     addEventListener(event: string, callback: (MouseEvent)=>void) {
         this.canvas.addEventListener(event, callback)
     }
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, id: string) {
+        this.canvas = <HTMLCanvasElement>document.getElementById(id)
+        this.context = <CanvasRenderingContext2D>this.canvas.getContext("2d")
         this.canvas.width = width
         this.canvas.height = height
     }

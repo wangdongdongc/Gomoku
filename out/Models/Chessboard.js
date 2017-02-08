@@ -3,6 +3,8 @@
  */
 var Chessboard = (function () {
     function Chessboard(numberOfRows, numberOfColumns) {
+        if (numberOfRows === void 0) { numberOfRows = 15; }
+        if (numberOfColumns === void 0) { numberOfColumns = 15; }
         this.chessboard = [];
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
@@ -14,13 +16,24 @@ var Chessboard = (function () {
             this.chessboard.push(row);
         }
     }
-    Chessboard.prototype.hasChessOn = function (row, col) {
-        return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chessman.None : undefined;
+    /**
+     * 判断坐标是否有棋子(可以指定棋子类型)
+     *
+     * 坐标越界则返回 undefined
+     * @param {Chessman} givenChess 指定棋子的类型
+     */
+    Chessboard.prototype.hasChess = function (row, col, givenChess) {
+        if (givenChess) {
+            return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != givenChess : undefined;
+        }
+        else {
+            return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chessman.None : undefined;
+        }
     };
-    Chessboard.prototype.getChessOn = function (row, col) {
+    Chessboard.prototype.getChess = function (row, col) {
         return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] : undefined;
     };
-    Chessboard.prototype.setChessOn = function (row, col, chess) {
+    Chessboard.prototype.putChess = function (row, col, chess) {
         if (this.validRowAndCol(row, col)) {
             this.chessboard[row - 1][col - 1] = chess;
         }

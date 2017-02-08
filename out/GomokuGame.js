@@ -6,7 +6,7 @@ var GomokuGame = (function () {
         if (playWithAI === void 0) { playWithAI = false; }
         this.maxRow = 15;
         this.maxCol = 15;
-        this.currentPlayer = Player.Black; //黑子先行
+        this.currentPlayer = GomokuPlayer.Black; //黑子先行
         this.gameIsOver = false;
         this.chessboard = new Chessboard(this.maxRow, this.maxCol);
     }
@@ -20,8 +20,8 @@ var GomokuGame = (function () {
     GomokuGame.prototype.putChessOn = function (row, col) {
         if (this.gameIsOver)
             return false;
-        if (this.chessboard.validRowAndCol(row, col) && !this.chessboard.hasChessOn(row, col)) {
-            this.chessboard.setChessOn(row, col, chessOfPlayer(this.currentPlayer));
+        if (this.chessboard.validRowAndCol(row, col) && !this.chessboard.hasChess(row, col)) {
+            this.chessboard.putChess(row, col, chessOfPlayer(this.currentPlayer));
             this.lastAction = {
                 row: row,
                 col: col,
@@ -56,8 +56,8 @@ var GomokuGame = (function () {
             return;
         this.winningChesses = [];
         for (var col = 1; col <= this.maxCol; col++) {
-            if (this.chessboard.getChessOn(row, col) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(row, col));
+            if (this.chessboard.getChess(row, col) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(row, col));
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true;
                     return;
@@ -77,8 +77,8 @@ var GomokuGame = (function () {
         if (this.gameIsOver)
             return;
         for (var row = 1; row <= this.maxRow; row++) {
-            if (this.chessboard.getChessOn(row, col) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(row, col));
+            if (this.chessboard.getChess(row, col) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(row, col));
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true;
                     return;
@@ -112,8 +112,8 @@ var GomokuGame = (function () {
             toC = 15 + col - row;
         }
         while (fromR <= toR && fromC <= toC) {
-            if (this.chessboard.getChessOn(fromR, fromC) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(fromR, fromC));
+            if (this.chessboard.getChess(fromR, fromC) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(fromR, fromC));
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true;
                     return;
@@ -149,8 +149,8 @@ var GomokuGame = (function () {
             toC = row + col - 15;
         }
         while (fromR <= toR && fromC >= toC) {
-            if (this.chessboard.getChessOn(fromR, fromC) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(fromR, fromC));
+            if (this.chessboard.getChess(fromR, fromC) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(fromR, fromC));
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true;
                     return;
@@ -165,4 +165,4 @@ var GomokuGame = (function () {
     };
     return GomokuGame;
 }());
-//# sourceMappingURL=GomokuBrain.js.map
+//# sourceMappingURL=GomokuGame.js.map

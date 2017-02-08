@@ -13,6 +13,15 @@ enum Chessman {
  * @param {Player} player 玩家
  * @return {Chess} 玩家的棋子
  */
-function chessOfPlayer(player: Player): Chessman {
-    return Chessman[Player[player]]
+function chessOfPlayer(player: GomokuPlayer): Chessman {
+    return Chessman[GomokuPlayer[player]]
+}
+
+/**
+ * 返回对手所持有的棋子
+ * @param {Player} player 玩家
+ * @return {Chess} 对手的棋子
+ */
+function chessOfRival(rival: GomokuPlayer): Chessman {
+    return Chessman[GomokuPlayer[rival]]
 }

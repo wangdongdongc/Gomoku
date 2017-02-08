@@ -2,14 +2,8 @@
  * 集成 Canvas 元素的视图类
  */
 var CanvasView = (function () {
-    function CanvasView(width, height) {
-        /**
-         * canvas元素
-         */
-        this.canvas = document.getElementById("game");
-        /**
-         * canvas元素的绘制环境(2D)
-         */
+    function CanvasView(width, height, id) {
+        this.canvas = document.getElementById(id);
         this.context = this.canvas.getContext("2d");
         this.canvas.width = width;
         this.canvas.height = height;

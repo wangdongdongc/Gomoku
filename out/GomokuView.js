@@ -9,28 +9,28 @@ var __extends = (this && this.__extends) || function (d, b) {
 var GomokuView = (function (_super) {
     __extends(GomokuView, _super);
     function GomokuView(width, height, viewController) {
-        var _this = _super.call(this, width, height) || this;
+        var _this = _super.call(this, width, height, "game") || this;
         _this.chessboardStyle = {
             originX: 0,
             originY: 0,
             width: _this.bound.width,
             height: _this.bound.height,
             lineWidth: 1,
-            lineColor: "grey",
+            lineColor: "black",
             borderWidth: 0.5,
-            borderColor: "grey",
-            backgroudColor: "rgb(230,230,230)"
+            borderColor: "black",
+            backgroudColor: "white"
         };
         _this.styleForBlackChess = {
             radius: 13,
             borderWidth: 1,
             borderColor: "rgb(210,210,210)",
-            fillColor: "rgb(77,77,77)"
+            fillColor: "black"
         };
         _this.styleForWhiteChess = {
             radius: 13,
-            borderWidth: 0.5,
-            borderColor: "grey",
+            borderWidth: 1,
+            borderColor: "black",
             fillColor: "white"
         };
         _this.viewController = viewController;

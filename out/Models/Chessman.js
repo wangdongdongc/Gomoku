@@ -14,6 +14,14 @@ var Chessman;
  * @return {Chess} 玩家的棋子
  */
 function chessOfPlayer(player) {
-    return Chessman[Player[player]];
+    return Chessman[GomokuPlayer[player]];
+}
+/**
+ * 返回对手所持有的棋子
+ * @param {Player} player 玩家
+ * @return {Chess} 对手的棋子
+ */
+function chessOfRival(rival) {
+    return Chessman[GomokuPlayer[rival]];
 }
 //# sourceMappingURL=Chessman.js.map

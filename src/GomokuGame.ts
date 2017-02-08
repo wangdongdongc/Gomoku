@@ -7,48 +7,49 @@
 interface GomokuAction {
     row: number
     col: number
-    player: Player
+    player: GomokuPlayer
 }
 
 /**
  * 五子棋游戏 (MVC) 的 Model 层
  */
-class GomokuBrain {
+class GomokuGame {
     readonly maxRow = 15
     readonly maxCol = 15
 
     chessboard: Chessboard
     lastAction: GomokuAction
-    currentPlayer: Player = Player.Black //黑子先行
+    currentPlayer: GomokuPlayer = GomokuPlayer.Black //黑子先行
     gameIsOver: boolean = false
     winningChesses: Chessman[]
-    constructor() {
+
+    constructor(playWithAI: boolean = false) {
         this.chessboard = new Chessboard(this.maxRow, this.maxCol)
     }
 
     /**
-     * 当前玩家在坐标上落子
+     * 当前玩家在坐标上落子,成功落子后返回 true
      * (将充分检查以确保安全落子)
      *  落子后将变更当前玩家
      * @param {number} row 行坐标
      * @param {number} col 列坐标
      */
-    public putChessOn(row: number, col: number) {
-        if (this.gameIsOver) return
-        if (this.chessboard.validRowAndCol(row, col) && !this.chessboard.hasChessOn(row, col)) {
-            this.chessboard.setChessOn(row, col, chessOfPlayer(this.currentPlayer))
+    public putChessOn(row: number, col: number): boolean {
+        if (this.gameIsOver) return false
+        if (this.chessboard.validRowAndCol(row, col) && !this.chessboard.hasChess(row, col)) {
+            this.chessboard.putChess(row, col, chessOfPlayer(this.currentPlayer))
             this.lastAction = {
                 row: row,
                 col: col,
                 player: this.currentPlayer
             }
             this.checkLastAction()
-            if (this.gameIsOver) {
-                return
-            } else {
+            if (!this.gameIsOver) {
                 this.currentPlayer = changePlayer(this.currentPlayer)
             }
+            return true
         }
+        return false
     }
 
     /**
@@ -68,12 +69,12 @@ class GomokuBrain {
      * @param {number} row 行坐标
      * @param {Player} forPlayer 指定的玩家
      */
-    private checkRow(row: number, forPlayer: Player) {
+    private checkRow(row: number, forPlayer: GomokuPlayer) {
         if (this.gameIsOver) return
         this.winningChesses = []
         for (let col = 1; col <= this.maxCol; col++) {
-            if (this.chessboard.getChessOn(row, col) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(row, col))
+            if (this.chessboard.getChess(row, col) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(row, col))
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true
                     return
@@ -89,11 +90,11 @@ class GomokuBrain {
      * @param {number} col 列坐标
      * @param {Player} forPlayer 玩家
      */
-    private checkColumn(col: number, forPlayer: Player) {
+    private checkColumn(col: number, forPlayer: GomokuPlayer) {
         if (this.gameIsOver) return
         for (let row = 1; row <= this.maxRow; row++) {
-            if (this.chessboard.getChessOn(row, col) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(row, col))
+            if (this.chessboard.getChess(row, col) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(row, col))
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true
                     return
@@ -110,7 +111,7 @@ class GomokuBrain {
      * @param {number} col 列坐标
      * @param {Player} forPlayer 玩家
      */
-    private checkMainDiagonal(row: number, col: number, forPlayer: Player) {
+    private checkMainDiagonal(row: number, col: number, forPlayer: GomokuPlayer) {
         if (this.gameIsOver) return
         let fromR, fromC, toR, toC
         if (col >= row) {
@@ -125,8 +126,8 @@ class GomokuBrain {
             toC = 15 + col - row
         }
         while (fromR <= toR && fromC <= toC) {
-            if (this.chessboard.getChessOn(fromR, fromC) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(fromR, fromC))
+            if (this.chessboard.getChess(fromR, fromC) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(fromR, fromC))
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true
                     return
@@ -145,7 +146,7 @@ class GomokuBrain {
      * @param {number} col 列坐标
      * @param {Player} forPlayer 玩家
      */
-    private checkSubDiagonal(row: number, col: number, forPlayer: Player) {
+    private checkSubDiagonal(row: number, col: number, forPlayer: GomokuPlayer) {
         if (this.gameIsOver) return
         let fromR, fromC, toR, toC
         if (col + row <= 16) {
@@ -160,8 +161,8 @@ class GomokuBrain {
             toC = row + col - 15
         }
         while (fromR <= toR && fromC >= toC) {
-            if (this.chessboard.getChessOn(fromR, fromC) == chessOfPlayer(forPlayer)) {
-                this.winningChesses.push(this.chessboard.getChessOn(fromR, fromC))
+            if (this.chessboard.getChess(fromR, fromC) == chessOfPlayer(forPlayer)) {
+                this.winningChesses.push(this.chessboard.getChess(fromR, fromC))
                 if (this.winningChesses.length == 5) {
                     this.gameIsOver = true
                     return

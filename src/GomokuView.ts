@@ -8,21 +8,21 @@ class GomokuView extends CanvasView {
         width: this.bound.width,
         height: this.bound.height,
         lineWidth: 1,
-        lineColor: "grey",
+        lineColor: "black",
         borderWidth: 0.5,
-        borderColor: "grey",
-        backgroudColor: "rgb(230,230,230)" 
+        borderColor: "black",
+        backgroudColor: "white" 
     }
     private readonly styleForBlackChess = {
         radius: 13,
         borderWidth: 1,
         borderColor: "rgb(210,210,210)",
-        fillColor: "rgb(77,77,77)"
+        fillColor: "black"
     }
     private readonly styleForWhiteChess = {
         radius: 13,
-        borderWidth: 0.5,
-        borderColor: "grey",
+        borderWidth: 1,
+        borderColor: "black",
         fillColor: "white"
     }
 
@@ -39,7 +39,7 @@ class GomokuView extends CanvasView {
     viewController: GomokuViewController
 
     constructor(width: number, height: number, viewController: GomokuViewController) {
-        super(width, height)
+        super(width, height, "game")
         this.viewController = viewController
         this.drawChessboard()
         this.registerEvents()

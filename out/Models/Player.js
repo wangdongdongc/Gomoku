@@ -1,22 +1,22 @@
 /**
  * 玩家：黑、白
  */
-var Player;
-(function (Player) {
-    Player[Player["Black"] = 1] = "Black";
-    Player[Player["White"] = 2] = "White";
-})(Player || (Player = {}));
+var GomokuPlayer;
+(function (GomokuPlayer) {
+    GomokuPlayer[GomokuPlayer["Black"] = 1] = "Black";
+    GomokuPlayer[GomokuPlayer["White"] = 2] = "White";
+})(GomokuPlayer || (GomokuPlayer = {}));
 /**
  * 改变当前玩家, 返回新玩家
  * @param {Player} player 当前玩家
  * @return {Player} 新玩家
  */
 function changePlayer(player) {
-    if (player == Player.Black) {
-        return Player.White;
+    if (player == GomokuPlayer.Black) {
+        return GomokuPlayer.White;
     }
     else {
-        return Player.Black;
+        return GomokuPlayer.Black;
     }
 }
 //# sourceMappingURL=Player.js.map

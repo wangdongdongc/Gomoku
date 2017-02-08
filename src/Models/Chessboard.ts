@@ -6,10 +6,10 @@ class Chessboard {
      * 存储棋子对象的二维数组
      */
     private chessboard: Chessman[][]
-    private numberOfRows: number
-    private numberOfColumns: number
+    readonly numberOfRows: number
+    readonly numberOfColumns: number
 
-    constructor(numberOfRows, numberOfColumns) {
+    constructor(numberOfRows = 15, numberOfColumns = 15) {
         this.chessboard = []
         this.numberOfRows = numberOfRows
         this.numberOfColumns = numberOfColumns
@@ -22,15 +22,25 @@ class Chessboard {
         }
     }
 
-    hasChessOn(row: number, col: number): boolean {
-        return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chessman.None : undefined
+    /**
+     * 判断坐标是否有棋子(可以指定棋子类型)
+     * 
+     * 坐标越界则返回 undefined
+     * @param {Chessman} givenChess 指定棋子的类型
+     */
+    hasChess(row: number, col: number, givenChess?: Chessman): boolean {
+        if (givenChess) {
+            return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != givenChess : undefined
+        } else {
+            return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chessman.None : undefined
+        }
     }
 
-    getChessOn(row: number, col: number): Chessman {
+    getChess(row: number, col: number): Chessman {
         return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] : undefined
     }
 
-    setChessOn(row: number, col: number, chess: Chessman) {
+    putChess(row: number, col: number, chess: Chessman) {
         if (this.validRowAndCol(row, col)) {
             this.chessboard[row - 1][col - 1] = chess
         }

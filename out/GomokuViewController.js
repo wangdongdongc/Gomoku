@@ -12,6 +12,10 @@ var GomokuViewController = (function () {
             this.playWithAI = true;
             this.AI = new TestAI_1();
         }
+        //AI先落子
+        this.AI.putFirstChessInMiddle();
+        this.game.putChessOn(8, 8); //game默认白子开局
+        this.gameView.putChessOn(8, 8, Chessman.White);
     }
     GomokuViewController.prototype.handleClickEvent = function (x, y) {
         if (this.game.gameIsOver)

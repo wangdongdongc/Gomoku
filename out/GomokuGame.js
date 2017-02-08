@@ -6,7 +6,7 @@ var GomokuGame = (function () {
         if (playWithAI === void 0) { playWithAI = false; }
         this.maxRow = 15;
         this.maxCol = 15;
-        this.currentPlayer = GomokuPlayer.Black; //黑子先行
+        this.currentPlayer = GomokuPlayer.White; //白子(AI)先行
         this.gameIsOver = false;
         this.chessboard = new Chessboard(this.maxRow, this.maxCol);
     }

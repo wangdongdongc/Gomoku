@@ -19,7 +19,7 @@ class GomokuGame {
 
     chessboard: Chessboard
     lastAction: GomokuAction
-    currentPlayer: GomokuPlayer = GomokuPlayer.Black //黑子先行
+    currentPlayer: GomokuPlayer = GomokuPlayer.White //白子(AI)先行
     gameIsOver: boolean = false
     winningChesses: Chessman[]
 

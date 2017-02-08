@@ -16,6 +16,10 @@ class GomokuViewController {
             this.playWithAI = true
             this.AI = new TestAI_1()
         }
+        //AI先落子
+        (<TestAI_1>this.AI).putFirstChessInMiddle()
+        this.game.putChessOn(8, 8) //game默认白子开局
+        this.gameView.putChessOn(8, 8, Chessman.White)
     }
 
     public handleClickEvent(x: number, y: number) {

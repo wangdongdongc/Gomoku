@@ -20,88 +20,79 @@ class TestAI_1 extends GomokuAI {
     }
 
     /**
-     * 假设在(i, j)处落子, 计算落子后棋局的分数 scores[i][j]
+     * AI 先在中间落子
+     */
+    putFirstChessInMiddle() {
+        this.chessboard[7][7] = 1
+    }
+
+    /**
+     * 根据棋型给出分数
+     * 
+     * 一个棋型由其中连子的个数和前后是否堵截来确定
+     */
+    private scoreOfStyle(line: number, block1: boolean, block2: boolean) {
+        if (line == 5) return Score.ooooo
+        if (block1 && block2) return 0
+        switch (line) {
+            case 4: return (block1 || block2) ? Score.Ioooo : Score.oooo
+            case 3: return (block1 || block2) ? Score.Iooo : Score.ooo
+            case 2: return (block1 || block2) ? Score.Ioo : Score.oo
+            case 1: return 0
+        }
+    }
+
+    /**
+     * 假设在(i, j)处落子, 计算落子后获得的分数 scores[i][j]
      */
     private computeScore(i: number, j: number) {
         let score = 0
-        //上、下 (r不变, c加减)
-        let r = i
-        let c = j - 1
-        while (1) {
-            if (c == -1) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            c--
-        }
-        c = j + 1
-        while (1) {
-            if (c == 15) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            c++
-        }
-        //左、右 (r加减, c不变)
-        r = i - 1
-        c = j
-        while (1) {
-            if (r == -1) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            r--
-        }
-        r = i + 1
-        while (1) {
-            if (r == 15) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            r++
-        }
-        //主对角线方向 (rc同加减)
-        r = i - 1
-        c = j - 1
-        while (1) {
-            if (r == -1 || c == -1) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            r--
-            c--
-        }
-        r = i + 1
-        c = j + 1
-        while (1) {
-            if (r == 15 || c == 15) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            r++
-            c++
-        }
-        //副对角线方向 (r加c减或r减c加)
-        r = i - 1
-        c = j + 1
-        while (1) {
-            if (r == -1 || c == 15) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            r--
-            c++
-        }
-        r = i + 1
-        c = j - 1
-        while (1) {
-            if (r == 15 || c == -1) {score--; break}
-            if (this.chessboard[r][c] == 1) {score++}
-            else if (this.chessboard[r][c] == 0) {break}
-            else {score--; break}
-            r++
-            c--
-        }
+        //上、下 (r先减后加, c不变)
+        let r1 = i, c = j
+        while (r1 > 0 && this.chessboard[r1 - 1][c] == 1) r1--
+        let upIsBlocked = (r1 == 0) || this.chessboard[r1 - 1][c] == -1
+        let r2 = i
+        while (r2 < 14 && this.chessboard[r2 + 1][c] == 1) r2++
+        let downIsBlocked = (r2 == 14) || this.chessboard[r2 + 1][c] == -1
+        let line = (r1 == r2) ? 1 : (r2 - r1 + 1)
+        // 判断棋型
+        score += this.scoreOfStyle(line, upIsBlocked, downIsBlocked)
+        
+        //左、右 (r不变, c先减后加)
+        let r = i, c1 = j
+        while (c1 > 0 && this.chessboard[r][c1 - 1] == 1) c1--
+        let leftIsBlocked = (c1 == 0) || this.chessboard[r][c1 - 1] == -1
+        let c2 = j
+        while (c2 < 14 && this.chessboard[r][c2 + 1] == 1) c2++
+        let rightIsBlocked = (c2 == 14) || this.chessboard[r][c2 + 1] == -1
+        line = (c1 == c2) ? 1 : (c2 - c1 + 1)
+        // 判断棋型
+        score += this.scoreOfStyle(line, leftIsBlocked, rightIsBlocked)
+        
+        //主对角线方向 (rc先减后加)
+        r1 = i, c1 = j
+        while (r1 > 0 && c1 > 0 && this.chessboard[r1 - 1][c1 - 1] == 1) {r1--; c1--}
+        let leftUpIsBlocked = (r1 == 0 || c1 == 0) || this.chessboard[r1 - 1][c1 - 1] == -1
+        r2 = i
+        c2 = j
+        while (r2 < 14 && c2 < 14 && this.chessboard[r2 + 1][c2 + 1] == 1) {r2++; c2++}
+        let rightDownIsBlocked = (r2 == 14 || c2 == 14) || this.chessboard[r2 + 1][c2 + 1] == -1
+        line = (r1 == r2) ? 1 : (r2 - r1 + 1)
+        // 判断棋型
+        score += this.scoreOfStyle(line, leftUpIsBlocked, rightDownIsBlocked)
+        
+        //副对角线方向 (r先加后减, c先减后加)
+        r1 = i, c1 = j
+        while (r1 < 14 && c1 > 0 && this.chessboard[r1 + 1][c1 - 1] == 1) {r1++; c1--}
+        let leftDownIsBlocked = (r1 == 14 || c1 == 0) || this.chessboard[r1 + 1][c1 - 1] == -1
+        r2 = i
+        c2 = j
+        while (r2 > 0 && c2 < 14 && this.chessboard[r2 - 1][c2 + 1] == 1) {r2--; c2++}
+        let rightUpIsBlocked = (r2 == 0 || c2 == 14) || this.chessboard[r2 - 1][c2 + 1] == -1
+        line = (c1 == c2) ? 1 : (c2 - c1 + 1)
+        // 判断棋型
+        score += this.scoreOfStyle(line, leftDownIsBlocked, rightUpIsBlocked)
+
         return score
     }
 
@@ -112,8 +103,11 @@ class TestAI_1 extends GomokuAI {
         for (let i = 0; i < 15; i++)
             for (let j = 0; j < 15; j++)
                 if (this.chessboard[i][j] == 0) {
-                    let s = this.computeScore(i, j)
-                    this.scores[i][j] = s > 0 ? s : 0
+                    // let s = this.computeScore(i, j)
+                    // this.scores[i][j] = s > 0 ? s : 0
+                    this.chessboard[i][j] = 1 //尝试落子
+                    this.scores[i][j] = this.computeScore(i, j)
+                    this.chessboard[i][j] = 0 //拿回棋子
                 }
         console.log("scores:");
         for (let i = 0; i < 15; i++) {

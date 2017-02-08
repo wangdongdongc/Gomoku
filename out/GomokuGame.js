@@ -28,9 +28,7 @@ var GomokuGame = (function () {
                 player: this.currentPlayer
             };
             this.checkLastAction();
-            if (!this.gameIsOver) {
-                this.currentPlayer = changePlayer(this.currentPlayer);
-            }
+            this.currentPlayer = changePlayer(this.currentPlayer);
             return true;
         }
         return false;

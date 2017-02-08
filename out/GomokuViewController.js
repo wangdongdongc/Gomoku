@@ -24,6 +24,9 @@ var GomokuViewController = (function () {
         var col = Math.round(x / this.gameView.horizontalLineGap);
         var row = Math.round(y / this.gameView.verticalLineGap);
         this.game.putChessOn(row, col);
+        if (this.game.currentPlayer != GomokuPlayer.White) {
+            return;
+        } //防止乱按
         this.gameView.putChessOn(this.game.lastAction.row, this.game.lastAction.col, chessOfPlayer(this.game.lastAction.player));
         //AI落子
         if (this.playWithAI && !this.game.gameIsOver) {

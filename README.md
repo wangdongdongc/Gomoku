@@ -38,6 +38,7 @@ src/Views/ComokuView.ts 游戏视图
 src/Views/MenuView.ts 菜单视图
 ```
 UI 基于 HTML5 [Canvas](https://zh.wikipedia.org/wiki/Canvas_(HTML%E5%85%83%E7%B4%A0)) 实现。Canvas 是 HTML5 的一个元素，它在页面上嵌入一个画布，并使用 Javascript 在上面绘制线条，形状，图像。
+
 ![image](http://raw.github.com/wangdongdongc/Gomoku/master/images/github/view-demo.png)
 
 ### *Controller*

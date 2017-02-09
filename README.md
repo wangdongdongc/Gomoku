@@ -1,3 +1,3 @@
 # Gomoku 五子棋游戏
 Web 版的五子棋小游戏
-![image](http://github.com/wangdongdongc/Gomoku/images/github/demo.png)
+![image](http://raw.github.com/wangdongdongc/Gomoku/master/images/github/demo.png)

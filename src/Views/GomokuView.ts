@@ -2,29 +2,7 @@
  * 五子棋游戏 (MVC) 的 View 层
  */
 class GomokuView extends CanvasView {
-    private readonly chessboardStyle: ChessboardStyle = {
-        originX: 0,
-        originY: 0,
-        width: this.bound.width,
-        height: this.bound.height,
-        lineWidth: 1,
-        lineColor: "black",
-        borderWidth: 0.5,
-        borderColor: "black",
-        backgroudColor: "white" 
-    }
-    private readonly styleForBlackChess = {
-        radius: 13,
-        borderWidth: 1,
-        borderColor: "rgb(210,210,210)",
-        fillColor: "black"
-    }
-    private readonly styleForWhiteChess = {
-        radius: 13,
-        borderWidth: 1,
-        borderColor: "black",
-        fillColor: "white"
-    }
+    theme: Theme = new DefaultTheme()
 
     get horizontalLineGap(): number {
         return this.bound.height / 16
@@ -54,16 +32,24 @@ class GomokuView extends CanvasView {
         if (chess == Chessman.None) return
         let coord = this.getChessPosition(row, col)
         let style = chess == Chessman.Black ? 
-                    this.styleForBlackChess : 
-                    this.styleForWhiteChess
+                    this.theme.blackChessStyle : 
+                    this.theme.whiteChessStyle
         new ChessmanShape({
-            centerX: coord.x,
-            centerY: coord.y,
             radius: style.radius,
             borderColor: style.borderColor,
             borderWidth: style.borderWidth,
             fillColor: style.fillColor
-        }).drawOn(this.context)
+        }, coord.x, coord.y).drawOn(this.context)
+    }
+
+    /**
+     * 重绘棋盘, 并保持棋局不变
+     */
+    public redrawChessboard(actions: GomokuAction[]) {
+        this.drawChessboard()
+        for (let i = 0; i < actions.length; i++) {
+            this.putChessOn(actions[i].row, actions[i].col, chessOfPlayer(actions[i].player))
+        }
     }
 
     /**
@@ -73,8 +59,8 @@ class GomokuView extends CanvasView {
      */
     private getChessPosition(row: number, col: number){
         return {
-            x: this.chessboardStyle.originY + col * (this.chessboardStyle.height / 16),
-            y: this.chessboardStyle.originX + row * (this.chessboardStyle.width / 16)
+            x: this.theme.chessboardStyle.originY + col * (this.bound.height / 16),
+            y: this.theme.chessboardStyle.originX + row * (this.bound.width / 16)
         }
     }
 
@@ -82,7 +68,8 @@ class GomokuView extends CanvasView {
      * 绘制棋盘
      */
     private drawChessboard() {
-        new ChessboardShape(this.chessboardStyle).drawOn(this.context)
+        this.context.clearRect(0, 0, this.bound.width, this.bound.height)
+        new ChessboardShape(this.theme.chessboardStyle, this.bound.width, this.bound.height).drawOn(this.context)
     }
 
     /**
@@ -96,5 +83,4 @@ class GomokuView extends CanvasView {
             this.viewController.handleClickEvent(event.offsetX, event.offsetY)
         })
     }
-
 }

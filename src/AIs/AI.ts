@@ -1,9 +1,10 @@
 /**
- * 五子棋人工智能棋手
+ * 五子棋人工智能棋手抽象类
+ *  (在控制器中使用继承该类的子类)
  */
 abstract class GomokuAI {
     /**
-     * 规定为 AI 执白子, 后手
+     * 规定 AI 执白子
      */
     protected readonly player = GomokuPlayer.White
 

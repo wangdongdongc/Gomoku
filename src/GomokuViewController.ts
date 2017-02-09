@@ -2,8 +2,8 @@
  * 五子棋游戏 (MVC) 的 Controller 层
  */
 class GomokuViewController {
-    gameView: GomokuView //控制器持有对其视图的引用
-    menuView: MenuView  //控制器持有对其视图的引用
+    gameView: GomokuView //游戏视图
+    menuView: MenuView  //菜单视图
     game: GomokuGame
     AI: GomokuAI
     playWithAI: boolean = false
@@ -11,6 +11,7 @@ class GomokuViewController {
     constructor(playWithAI: boolean = false) {
         this.gameView = new GomokuView(480, 480, this)
         this.menuView = new MenuView(480, 200, this)
+        this.menuView.statusMessage = "执黑子"
         this.game = new GomokuGame()
         if (playWithAI) {
             this.playWithAI = true
@@ -22,6 +23,9 @@ class GomokuViewController {
         this.gameView.putChessOn(8, 8, Chessman.White)
     }
 
+    /**
+     * 响应棋盘上的点击
+     */
     public handleClickEvent(x: number, y: number) {
         if (this.game.gameIsOver) return
         //玩家落子
@@ -44,6 +48,19 @@ class GomokuViewController {
                 action.col,
                 chessOfPlayer(action.player)
             )
+        }
+        if (this.game.gameIsOver) {
+            this.menuView.statusMessage = this.game.currentPlayer == 1 ? "白子胜" : "黑子胜"
+        }
+    }
+
+    public changeTheme(theme: Theme) {
+        this.gameView.theme = theme
+        this.gameView.redrawChessboard(this.game.allActions)
+        if (theme instanceof DefaultTheme) {
+            this.menuView.statusMessage = "执黑子"
+        } else if (theme instanceof VividTheme) {
+            this.menuView.statusMessage = "执蓝子"
         }
     }
 }

@@ -10,29 +10,7 @@ var GomokuView = (function (_super) {
     __extends(GomokuView, _super);
     function GomokuView(width, height, viewController) {
         var _this = _super.call(this, width, height, "game") || this;
-        _this.chessboardStyle = {
-            originX: 0,
-            originY: 0,
-            width: _this.bound.width,
-            height: _this.bound.height,
-            lineWidth: 1,
-            lineColor: "black",
-            borderWidth: 0.5,
-            borderColor: "black",
-            backgroudColor: "white"
-        };
-        _this.styleForBlackChess = {
-            radius: 13,
-            borderWidth: 1,
-            borderColor: "rgb(210,210,210)",
-            fillColor: "black"
-        };
-        _this.styleForWhiteChess = {
-            radius: 13,
-            borderWidth: 1,
-            borderColor: "black",
-            fillColor: "white"
-        };
+        _this.theme = new DefaultTheme();
         _this.viewController = viewController;
         _this.drawChessboard();
         _this.registerEvents();
@@ -62,16 +40,23 @@ var GomokuView = (function (_super) {
             return;
         var coord = this.getChessPosition(row, col);
         var style = chess == Chessman.Black ?
-            this.styleForBlackChess :
-            this.styleForWhiteChess;
+            this.theme.blackChessStyle :
+            this.theme.whiteChessStyle;
         new ChessmanShape({
-            centerX: coord.x,
-            centerY: coord.y,
             radius: style.radius,
             borderColor: style.borderColor,
             borderWidth: style.borderWidth,
             fillColor: style.fillColor
-        }).drawOn(this.context);
+        }, coord.x, coord.y).drawOn(this.context);
+    };
+    /**
+     * 重绘棋盘, 并保持棋局不变
+     */
+    GomokuView.prototype.redrawChessboard = function (actions) {
+        this.drawChessboard();
+        for (var i = 0; i < actions.length; i++) {
+            this.putChessOn(actions[i].row, actions[i].col, chessOfPlayer(actions[i].player));
+        }
     };
     /**
      * 获取第i行第j列的棋子的坐标 (无越界检查)
@@ -80,15 +65,16 @@ var GomokuView = (function (_super) {
      */
     GomokuView.prototype.getChessPosition = function (row, col) {
         return {
-            x: this.chessboardStyle.originY + col * (this.chessboardStyle.height / 16),
-            y: this.chessboardStyle.originX + row * (this.chessboardStyle.width / 16)
+            x: this.theme.chessboardStyle.originY + col * (this.bound.height / 16),
+            y: this.theme.chessboardStyle.originX + row * (this.bound.width / 16)
         };
     };
     /**
      * 绘制棋盘
      */
     GomokuView.prototype.drawChessboard = function () {
-        new ChessboardShape(this.chessboardStyle).drawOn(this.context);
+        this.context.clearRect(0, 0, this.bound.width, this.bound.height);
+        new ChessboardShape(this.theme.chessboardStyle, this.bound.width, this.bound.height).drawOn(this.context);
     };
     /**
      * 注册Canvas事件, 设置事件处理函数 (将事件交由Controller处理)

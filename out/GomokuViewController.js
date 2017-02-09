@@ -7,6 +7,7 @@ var GomokuViewController = (function () {
         this.playWithAI = false;
         this.gameView = new GomokuView(480, 480, this);
         this.menuView = new MenuView(480, 200, this);
+        this.menuView.statusMessage = "执黑子";
         this.game = new GomokuGame();
         if (playWithAI) {
             this.playWithAI = true;
@@ -17,6 +18,9 @@ var GomokuViewController = (function () {
         this.game.putChessOn(8, 8); //game默认白子开局
         this.gameView.putChessOn(8, 8, Chessman.White);
     }
+    /**
+     * 响应棋盘上的点击
+     */
     GomokuViewController.prototype.handleClickEvent = function (x, y) {
         if (this.game.gameIsOver)
             return;
@@ -34,6 +38,19 @@ var GomokuViewController = (function () {
             var action = this.AI.nextAction();
             this.game.putChessOn(action.row, action.col);
             this.gameView.putChessOn(action.row, action.col, chessOfPlayer(action.player));
+        }
+        if (this.game.gameIsOver) {
+            this.menuView.statusMessage = this.game.currentPlayer == 1 ? "白子胜" : "黑子胜";
+        }
+    };
+    GomokuViewController.prototype.changeTheme = function (theme) {
+        this.gameView.theme = theme;
+        this.gameView.redrawChessboard(this.game.allActions);
+        if (theme instanceof DefaultTheme) {
+            this.menuView.statusMessage = "执黑子";
+        }
+        else if (theme instanceof VividTheme) {
+            this.menuView.statusMessage = "执蓝子";
         }
     };
     return GomokuViewController;

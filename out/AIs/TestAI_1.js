@@ -38,21 +38,6 @@ var TestAI_1 = (function (_super) {
                     rI = i;
                     rJ = j;
                 }
-        // console.log("rival scores:");
-        // for (let i = 0; i < 15; i++) {
-        //     console.log(rivalScores[i])
-        // }
-        // 若出现危险棋局, 直接选择防守
-        if (rivalScores[rI][rJ] >= 20) {
-            this.chessboard[rI][rJ] = 1;
-            this.next = {
-                row: rI + 1,
-                col: rJ + 1,
-                player: this.player
-            };
-            console.log("Defend: (" + this.next.row + ", " + this.next.col + ") s:" + rivalScores[rI][rJ]);
-            return;
-        }
         // 后攻
         // 遍历每一个位置, 评估分数
         this.scores = makeMatrix(15, 15, -1);
@@ -63,11 +48,7 @@ var TestAI_1 = (function (_super) {
                     this.scores[i][j] = this.computeScore(i, j, 1); //计算己方收益
                     this.chessboard[i][j] = 0; //收回尝试
                 }
-        // console.log("scores:");
-        // for (let i = 0; i < 15; i++) {
-        //     console.log(this.scores[i])
-        // }
-        // 将分数最高的位置作为下一个动作
+        // 选出进攻分数最高的位置
         var I = 0, J = 0;
         for (var i = 0; i < 15; i++)
             for (var j = 0; j < 15; j++)
@@ -75,14 +56,36 @@ var TestAI_1 = (function (_super) {
                     I = i;
                     J = j;
                 }
-        this.chessboard[I][J] = 1;
-        // 确定 next 为己方进攻收益最高的动作
-        this.next = {
-            row: I + 1,
-            col: J + 1,
-            player: this.player
-        };
-        console.log("Attack: (" + this.next.row + ", " + this.next.col + ") s:" + this.scores[I][J]);
+        if (this.scores[I][J] == 100) {
+            this.chessboard[I][J] = 1;
+            //直接获胜
+            this.next = {
+                row: I + 1,
+                col: J + 1,
+                player: this.player
+            };
+            console.log("Attack: (" + this.next.row + ", " + this.next.col + ") s:" + this.scores[I][J]);
+        }
+        else if (rivalScores[rI][rJ] >= 20) {
+            //若出现危险棋局, 选择防守策略
+            this.chessboard[rI][rJ] = 1;
+            this.next = {
+                row: rI + 1,
+                col: rJ + 1,
+                player: this.player
+            };
+            console.log("Defend: (" + this.next.row + ", " + this.next.col + ") s:" + rivalScores[rI][rJ]);
+        }
+        else {
+            //进攻
+            this.chessboard[I][J] = 1;
+            this.next = {
+                row: I + 1,
+                col: J + 1,
+                player: this.player
+            };
+            console.log("Attack: (" + this.next.row + ", " + this.next.col + ") s:" + this.scores[I][J]);
+        }
     };
     TestAI_1.prototype.nextAction = function () {
         return this.next;
@@ -94,13 +97,13 @@ var TestAI_1 = (function (_super) {
      */
     TestAI_1.prototype.scoreOfStyle = function (line, block1, block2) {
         if (line == 5)
-            return Score.ooooo;
+            return AIScore.ooooo;
         if (block1 && block2)
             return 0;
         switch (line) {
-            case 4: return (block1 || block2) ? Score.Ioooo : Score.oooo;
-            case 3: return (block1 || block2) ? Score.Iooo : Score.ooo;
-            case 2: return (block1 || block2) ? Score.Ioo : Score.oo;
+            case 4: return (block1 || block2) ? AIScore.Ioooo : AIScore.oooo;
+            case 3: return (block1 || block2) ? AIScore.Iooo : AIScore.ooo;
+            case 2: return (block1 || block2) ? AIScore.Ioo : AIScore.oo;
             case 1: return 0;
         }
     };
@@ -111,13 +114,13 @@ var TestAI_1 = (function (_super) {
      */
     TestAI_1.prototype.scoreOfRivalStyle = function (line, block1, block2) {
         if (line == 5)
-            return rivalScore.ooooo;
+            return AIRivalScore.ooooo;
         if (block1 && block2)
             return 0;
         switch (line) {
-            case 4: return (block1 || block2) ? rivalScore.Ioooo : rivalScore.oooo;
-            case 3: return (block1 || block2) ? rivalScore.Iooo : rivalScore.ooo;
-            case 2: return (block1 || block2) ? rivalScore.Ioo : rivalScore.oo;
+            case 4: return (block1 || block2) ? AIRivalScore.Ioooo : AIRivalScore.oooo;
+            case 3: return (block1 || block2) ? AIRivalScore.Iooo : AIRivalScore.ooo;
+            case 2: return (block1 || block2) ? AIRivalScore.Ioo : AIRivalScore.oo;
             case 1: return 0;
         }
     };

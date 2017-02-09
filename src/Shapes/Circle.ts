@@ -1,3 +1,8 @@
+interface Arc {
+    radian1: number
+    radian2: number
+}
+
 /**
  * 圆：
  *  一个圆由中心点(centerX, centerY)和半径(radius)所确定
@@ -8,6 +13,7 @@
 class Circle extends Shape {
     radius: number
     fill: boolean = false
+    arc: Arc
     get centerX(): number {
         return this.originX
     }
@@ -26,9 +32,12 @@ class Circle extends Shape {
     set borderWidth(width: number) {
         this.lineWidth = width
     }
-    constructor(centerX: number, centerY: number, radius: number) {
+    constructor(centerX: number, centerY: number, radius: number, arc?: Arc) {
         super(centerX, centerY)
         this.radius = radius
+        if (arc) {
+            this.arc = arc
+        }
     }
 
     drawOn(ctx: CanvasRenderingContext2D) {
@@ -36,7 +45,11 @@ class Circle extends Shape {
         ctx.beginPath()
         ctx.strokeStyle = this.strokeColor
         ctx.lineWidth = this.lineWidth
-        ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI)
+        if (this.arc) {
+            ctx.arc(this.centerX, this.centerY, this.radius, this.arc.radian1, this.arc.radian2)
+        } else {
+            ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI)
+        }
         if (this.fill) {
             ctx.fillStyle = this.fillColor
             ctx.fill()

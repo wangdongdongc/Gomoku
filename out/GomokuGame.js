@@ -1,5 +1,7 @@
 /**
  * 五子棋游戏 (MVC) 的 Model 层
+ *
+ * 控制游戏规则，判断胜负
  */
 var GomokuGame = (function () {
     function GomokuGame(playWithAI) {
@@ -9,6 +11,7 @@ var GomokuGame = (function () {
         this.currentPlayer = GomokuPlayer.White; //白子(AI)先行
         this.gameIsOver = false;
         this.chessboard = new Chessboard(this.maxRow, this.maxCol);
+        this.allActions = [];
     }
     /**
      * 当前玩家在坐标上落子,成功落子后返回 true
@@ -27,6 +30,7 @@ var GomokuGame = (function () {
                 col: col,
                 player: this.currentPlayer
             };
+            this.allActions.push(this.lastAction);
             this.checkLastAction();
             this.currentPlayer = changePlayer(this.currentPlayer);
             return true;

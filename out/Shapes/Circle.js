@@ -12,10 +12,13 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var Circle = (function (_super) {
     __extends(Circle, _super);
-    function Circle(centerX, centerY, radius) {
+    function Circle(centerX, centerY, radius, arc) {
         var _this = _super.call(this, centerX, centerY) || this;
         _this.fill = false;
         _this.radius = radius;
+        if (arc) {
+            _this.arc = arc;
+        }
         return _this;
     }
     Object.defineProperty(Circle.prototype, "centerX", {
@@ -57,7 +60,12 @@ var Circle = (function (_super) {
         ctx.beginPath();
         ctx.strokeStyle = this.strokeColor;
         ctx.lineWidth = this.lineWidth;
-        ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI);
+        if (this.arc) {
+            ctx.arc(this.centerX, this.centerY, this.radius, this.arc.radian1, this.arc.radian2);
+        }
+        else {
+            ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI);
+        }
         if (this.fill) {
             ctx.fillStyle = this.fillColor;
             ctx.fill();

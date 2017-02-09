@@ -12,6 +12,8 @@ interface GomokuAction {
 
 /**
  * 五子棋游戏 (MVC) 的 Model 层
+ * 
+ * 控制游戏规则，判断胜负
  */
 class GomokuGame {
     readonly maxRow = 15
@@ -19,12 +21,14 @@ class GomokuGame {
 
     chessboard: Chessboard
     lastAction: GomokuAction
+    allActions: GomokuAction[]
     currentPlayer: GomokuPlayer = GomokuPlayer.White //白子(AI)先行
     gameIsOver: boolean = false
     winningChesses: Chessman[]
 
     constructor(playWithAI: boolean = false) {
         this.chessboard = new Chessboard(this.maxRow, this.maxCol)
+        this.allActions = []
     }
 
     /**
@@ -43,6 +47,7 @@ class GomokuGame {
                 col: col,
                 player: this.currentPlayer
             }
+            this.allActions.push(this.lastAction)
             this.checkLastAction()
             this.currentPlayer = changePlayer(this.currentPlayer)
             return true

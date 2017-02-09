@@ -15,8 +15,6 @@ AIScore.Iooo = 3;
 AIScore.oo = 3;
 AIScore.Ioo = 1;
 AIScore.o = 0;
-AIScore.ooxoo = 9;
-AIScore.Ioooxoo = 9;
 /**
  * 棋型威胁估分(不可变)
  */
@@ -33,4 +31,4 @@ AIRivalScore.Iooo = 3;
 AIRivalScore.oo = 3;
 AIRivalScore.Ioo = 1;
 AIRivalScore.o = 0;
-//# sourceMappingURL=Score.js.map
+//# sourceMappingURL=AIScore.js.map

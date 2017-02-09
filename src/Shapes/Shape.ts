@@ -1,3 +1,6 @@
+/**
+ * 所有用于在 Canvas 绘制的图形继承自该类
+ */
 abstract class Shape {
     static DefaultLineWidth = 1
     static DefaultLineColor = "black"

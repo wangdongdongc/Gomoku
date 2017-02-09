@@ -19,11 +19,11 @@ abstract class CanvasView {
     /**
      * canvas元素
      */
-    private canvas
+    private canvas: HTMLCanvasElement
     /**
      * canvas元素的绘制环境(2D)
      */
-    protected context
+    protected context: CanvasRenderingContext2D
 
     addEventListener(event: string, callback: (MouseEvent)=>void) {
         this.canvas.addEventListener(event, callback)

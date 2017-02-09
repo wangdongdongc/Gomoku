@@ -1,6 +1,6 @@
 interface ChessmanStyle {
-    centerX: number
-    centerY: number
+    // centerX?: number
+    // centerY?: number
     radius: number
     borderWidth: number
     borderColor: string
@@ -13,8 +13,8 @@ interface ChessmanStyle {
  *  一个圆
  */
 class ChessmanShape extends Circle {
-    constructor(style: ChessmanStyle) {
-        super(style.centerX, style.centerY, style.radius)
+    constructor(style: ChessmanStyle, centerX: number, centerY: number) {
+        super(centerX, centerY, style.radius)
         this.borderWidth = style.borderWidth
         this.borderColor = style.borderColor
         this.fill = true

@@ -1,3 +1,6 @@
+/**
+ * 所有用于在 Canvas 绘制的图形继承自该类
+ */
 var Shape = (function () {
     function Shape(originX, originY) {
         this.originX = originX;

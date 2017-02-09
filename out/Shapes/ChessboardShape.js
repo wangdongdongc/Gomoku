@@ -11,10 +11,10 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var ChessboardShape = (function (_super) {
     __extends(ChessboardShape, _super);
-    function ChessboardShape(style) {
+    function ChessboardShape(style, width, height) {
         var _this = 
         //边框
-        _super.call(this, style.originX, style.originY, style.width, style.height) || this;
+        _super.call(this, style.originX, style.originY, width, height) || this;
         _this.numberOfHorizontalLines = 15;
         _this.numberOfVerticalLines = 15;
         _this.borderWidth = style.borderWidth;

@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var ChessmanShape = (function (_super) {
     __extends(ChessmanShape, _super);
-    function ChessmanShape(style) {
-        var _this = _super.call(this, style.centerX, style.centerY, style.radius) || this;
+    function ChessmanShape(style, centerX, centerY) {
+        var _this = _super.call(this, centerX, centerY, style.radius) || this;
         _this.borderWidth = style.borderWidth;
         _this.borderColor = style.borderColor;
         _this.fill = true;

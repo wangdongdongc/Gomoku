@@ -1,8 +1,8 @@
 interface ChessboardStyle {
     originX: number
     originY: number
-    width: number
-    height: number
+    // width?: number
+    // height?: number
     lineWidth: number
     lineColor: string
     borderWidth: number
@@ -22,9 +22,9 @@ class ChessboardShape extends Rectangle {
     verticalLines: Line[]
     horizontalLines: Line[]
 
-    constructor(style: ChessboardStyle) {
+    constructor(style: ChessboardStyle, width: number, height: number) {
         //边框
-        super(style.originX, style.originY, style.width, style.height)
+        super(style.originX, style.originY, width, height)
         this.borderWidth = style.borderWidth
         this.borderColor = style.borderColor
         this.fillColor = style.backgroudColor

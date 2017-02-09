@@ -4,7 +4,8 @@
 [Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期进行检查，执行安全的重构操作(重命名)。
 
 ## 运行
-直接在浏览器中打开 `index.html`
+* [在线玩](https://wangdongdongc.github.io/Gomoku/index.html)
+* 下载源代码，在浏览器中打开 `index.html`
 
 ## 编译
 > Typescript(.ts) 源文件需要编译成 Javascript(.js) 才能在浏览器中运行

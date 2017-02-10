@@ -1,7 +1,7 @@
 # Gomoku 五子棋游戏
 使用 Typescript 编写的带有简单 AI 的五子棋小游戏。
 
-[Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期进行检查，执行安全的重构操作(重命名)。
+[Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象与静态类型支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期对代码进行检查，执行安全的重构操作(重命名)。
 
 ## 运行
 * [在线玩](https://wangdongdongc.github.io/Gomoku/index.html)
@@ -55,8 +55,23 @@ View 接受用户的在 UI 上进行的操作（鼠标点击，鼠标滑动）�
 ## AI
 游戏自带 AI，能够与玩家进行对战
 ```
-src/AIs/
+src/AIs/AIScore.ts 棋型估分
+src/AIs/TestAI_1.ts  AI
 ```
+### AI 如何决策
+AI 能够看到当前棋盘的棋子分布，就像玩家一样
+
+AI 的决策分成了两步
+1. 防守：当玩家摆出能够一步必杀的棋局时，选择在能够一击必杀的位置上落子防御。能够一击必杀的棋局非常多非常复杂，这里只能考虑两种。1、oooo 2、两个或以上的 ooo 同时交叉出现时。
+2. 进攻：若不会出现有 oooo 或两个 ooo 以上同时交叉出现时，一般选择进攻。正如 AI 能够判断玩家可能摆出 oooo 的棋局，AI 也能判断是否可以下出 oooo 和多个 ooo 交叉的棋局。
+
+### 如何判断棋局
+AI 将尝试在棋盘的每一个空位置落子，然后检查上下左右与斜方向有多少个连子，连子是否被堵住。
+
+这种方法能够判断多个 ooo 交叉的情况。例如：检查水平方向时，发现了一个 ooo，检查斜方向时，又发现了 ooo 或者是 |oooo，这样的棋局一定可以获胜，若没有更明显的棋局，AI 应该在这种位置落子。
+
+这种检查是通过将各个方向的棋型的分数分别相加实现的。例如：发现了 ooooo 或者自由的 oooo 的棋局，这种棋局显然立即获胜，设置最高的分。发现了 ooo 的棋局，这种棋局一旦被堵截就无法获胜，但是，如果多个方向同时出现，就一定能获胜，一个 ooo 的棋局并没有太高的分，但两个 ooo 相加应该有很高的分。
+
 
 ## 一些抽象
 `src/Shapes/` 下存放用于在 Canvas 绘制特定形状的类（如：Circle、Rectangle），这些类包装了 Canvas 的 API，防止 View 中出现大量的 Canvas API。

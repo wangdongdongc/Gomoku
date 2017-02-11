@@ -1,5 +1,5 @@
 # Gomoku 五子棋游戏
-使用 Typescript 编写的带有简单 AI 的五子棋小游戏。
+使用 Typescript 编写的带有简单 AI 的五子棋小游戏 (无禁手)。
 
 [Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象与静态类型支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期对代码进行检查，执行安全的重构操作(重命名)。
 
@@ -19,13 +19,7 @@
 ## MVC 设计模式
 游戏使用 [MVC](https://zh.wikipedia.org/wiki/MVC) (model-view-controller) 的模式组织程序
 
-MVC 设计模式用 Model、View、Controller 将程序分为三个部分。
-
-Model 处理游戏内部逻辑，不关心外观。
-
-View 处理游戏的界面(UI)，不关心内部逻辑。
-
-Controller 沟通 Model 和 View，使之成为一体
+对应的源码如下
 
 ### *Model*
 实现五子棋的规则, 判断胜负
@@ -62,7 +56,9 @@ src/AIs/TestAI_1.ts  AI
 AI 能够看到当前棋盘的棋子分布，就像玩家一样
 
 AI 的决策分成了两步
+
 1. 防守：当玩家摆出能够一步必杀的棋局时，选择在能够一击必杀的位置上落子防御。能够一击必杀的棋局非常复杂，这里只能考虑最基本的类型。1、oooo 2、两个或以上的 ooo 或 |oooo 同时出现时。
+
 2. 进攻：若不会出现有 oooo 或两个 ooo 或 |oooo 以上同时出现，一般选择进攻。正如 AI 能够判断玩家可能摆出这几种基本的必杀棋局，AI 也能判断是否可以下出这些棋局。
 
 ### AI 如何判断棋局

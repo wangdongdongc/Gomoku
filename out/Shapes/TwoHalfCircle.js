@@ -35,4 +35,4 @@ var TwoHalfCircle = (function (_super) {
     };
     return TwoHalfCircle;
 }(Circle));
-//# sourceMappingURL=TwoHalfButton.js.map
+//# sourceMappingURL=TwoHalfCircle.js.map

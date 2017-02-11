@@ -12,7 +12,7 @@ interface ChessmanStyle {
  * 棋子图形：
  *  一个圆
  */
-class ChessmanShape extends Circle {
+class ChessShape extends Circle {
     constructor(style: ChessmanStyle, centerX: number, centerY: number) {
         super(centerX, centerY, style.radius)
         this.borderWidth = style.borderWidth

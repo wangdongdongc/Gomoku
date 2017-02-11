@@ -11,6 +11,7 @@ var GomokuView = (function (_super) {
     function GomokuView(width, height, viewController) {
         var _this = _super.call(this, width, height, "game") || this;
         _this.theme = new DefaultTheme();
+        _this.stepNumberFont = "15px menlo";
         _this.viewController = viewController;
         _this.drawChessboard();
         _this.registerEvents();
@@ -42,7 +43,7 @@ var GomokuView = (function (_super) {
         var style = chess == Chessman.Black ?
             this.theme.blackChessStyle :
             this.theme.whiteChessStyle;
-        new ChessmanShape({
+        new ChessShape({
             radius: style.radius,
             borderColor: style.borderColor,
             borderWidth: style.borderWidth,
@@ -56,6 +57,25 @@ var GomokuView = (function (_super) {
         this.drawChessboard();
         for (var i = 0; i < actions.length; i++) {
             this.putChessOn(actions[i].row, actions[i].col, chessOfPlayer(actions[i].player));
+        }
+    };
+    /**
+     * 在棋盘上绘制棋局的步数，把代表了步数的数字画在棋子上
+     * 数字的颜色取自当前主题
+     */
+    GomokuView.prototype.drawSteps = function (steps) {
+        for (var i = 0; i < steps.length; i++) {
+            var num = "" + (i + 1);
+            var pos = this.getChessPosition(steps[i].row, steps[i].col);
+            var player = steps[i].player;
+            var yOffSet = this.horizontalLineGap / 5;
+            var stepNum = new TextShape(num, pos.x, pos.y + yOffSet, true);
+            stepNum.fillColor = (player == GomokuPlayer.White) ?
+                this.theme.blackChessStyle.fillColor :
+                this.theme.whiteChessStyle.fillColor;
+            stepNum.strokeColor = stepNum.fillColor;
+            stepNum.font = this.stepNumberFont;
+            stepNum.drawOn(this.context);
         }
     };
     /**

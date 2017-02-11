@@ -1,7 +1,7 @@
 /**
- * 由两个半圆拼成的圆形按钮
+ * 由两个半圆拼成的圆形
  */
-class TwoHalfButton extends Circle {
+class TwoHalfCircle extends Circle {
     leftHalfCircle: Circle
     rightHalfCircle: Circle
 

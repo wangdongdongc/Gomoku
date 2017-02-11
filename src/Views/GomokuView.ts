@@ -3,6 +3,7 @@
  */
 class GomokuView extends CanvasView {
     theme: Theme = new DefaultTheme()
+    stepNumberFont: string = "15px menlo"
 
     get horizontalLineGap(): number {
         return this.bound.height / 16
@@ -34,7 +35,7 @@ class GomokuView extends CanvasView {
         let style = chess == Chessman.Black ? 
                     this.theme.blackChessStyle : 
                     this.theme.whiteChessStyle
-        new ChessmanShape({
+        new ChessShape({
             radius: style.radius,
             borderColor: style.borderColor,
             borderWidth: style.borderWidth,
@@ -49,6 +50,26 @@ class GomokuView extends CanvasView {
         this.drawChessboard()
         for (let i = 0; i < actions.length; i++) {
             this.putChessOn(actions[i].row, actions[i].col, chessOfPlayer(actions[i].player))
+        }
+    }
+
+    /**
+     * 在棋盘上绘制棋局的步数，把代表了步数的数字画在棋子上
+     * 数字的颜色取自当前主题
+     */
+    public drawSteps(steps: GomokuAction[]) {
+        for (let i = 0; i < steps.length; i++) {
+            let num = `${i + 1}`
+            let pos = this.getChessPosition(steps[i].row, steps[i].col)
+            let player = steps[i].player
+            let yOffSet = this.horizontalLineGap / 5
+            let stepNum = new TextShape(num, pos.x, pos.y + yOffSet, true)
+            stepNum.fillColor = (player == GomokuPlayer.White) ? 
+                this.theme.blackChessStyle.fillColor : 
+                this.theme.whiteChessStyle.fillColor
+            stepNum.strokeColor = stepNum.fillColor
+            stepNum.font = this.stepNumberFont
+            stepNum.drawOn(this.context)
         }
     }
 
@@ -69,7 +90,10 @@ class GomokuView extends CanvasView {
      */
     private drawChessboard() {
         this.context.clearRect(0, 0, this.bound.width, this.bound.height)
-        new ChessboardShape(this.theme.chessboardStyle, this.bound.width, this.bound.height).drawOn(this.context)
+        new ChessboardShape(
+            this.theme.chessboardStyle, 
+            this.bound.width, this.bound.height
+        ).drawOn(this.context)
     }
 
     /**

@@ -8,11 +8,12 @@ var __extends = (this && this.__extends) || function (d, b) {
  */
 var TextShape = (function (_super) {
     __extends(TextShape, _super);
-    function TextShape(content, orginX, originY, maxWidth, fill) {
+    function TextShape(content, orginX, originY, fill) {
         if (fill === void 0) { fill = false; }
         var _this = _super.call(this, orginX, originY) || this;
+        _this.font = "25px sans-serif";
+        _this.maxWidth = 300;
         _this.content = content;
-        _this.maxWidth = maxWidth;
         _this.fill = fill;
         _this.strokeColor = "grey";
         _this.fillColor = "grey";
@@ -21,7 +22,7 @@ var TextShape = (function (_super) {
     TextShape.prototype.drawOn = function (ctx) {
         ctx.save();
         ctx.textAlign = "center";
-        ctx.font = "25px sans-serif";
+        ctx.font = this.font;
         if (this.fill) {
             ctx.fillStyle = this.fillColor;
             ctx.fillText(this.content, this.originX, this.originY, this.maxWidth);

@@ -8,6 +8,22 @@ class GomokuViewController {
     AI: GomokuAI
     playWithAI: boolean = false
 
+    private _showChessStep: boolean = false
+    get showChessStep(): boolean {
+        return this._showChessStep
+    }
+    /**
+     * 修改 showChessStep 值的同时会重绘棋盘
+     */
+    set showChessStep(x: boolean) {
+        this._showChessStep = x
+        if (this.showChessStep) {
+            this.drawChessSteps()
+        } else {
+            this.gameView.redrawChessboard(this.gomokuGame.allActions)
+        }
+    }
+
     constructor(playWithAI: boolean = false) {
         this.gameView = new GomokuView(480, 480, this)
         this.menuView = new MenuView(480, 200, this)
@@ -21,6 +37,7 @@ class GomokuViewController {
         (<TestAI_1>this.AI).putFirstChessInMiddle()
         this.gomokuGame.putChessOn(8, 8) //game默认白子开局
         this.gameView.putChessOn(8, 8, Chessman.White)
+        this.menuView.chessCount = 1
     }
 
     /**
@@ -38,6 +55,7 @@ class GomokuViewController {
             this.gomokuGame.lastAction.col, 
             chessOfPlayer(this.gomokuGame.lastAction.player)
         )
+        this.menuView.chessCount = this.menuView.chessCount + 1
         //AI落子
         if (this.playWithAI && !this.gomokuGame.gameIsOver) {
             this.AI.analysAction(this.gomokuGame.lastAction)
@@ -58,8 +76,12 @@ class GomokuViewController {
             }
             this.menuView.statusMessage = this.gomokuGame.currentPlayer == 1 ? whiteWin : blackWin
         }
+        this.menuView.chessCount = this.menuView.chessCount + 1
     }
 
+    /**
+     * 更改棋盘主题
+     */
     public changeTheme(theme: Theme) {
         this.gameView.theme = theme
         this.gameView.redrawChessboard(this.gomokuGame.allActions)
@@ -68,5 +90,12 @@ class GomokuViewController {
         } else if (theme instanceof VividTheme) {
             this.menuView.statusMessage = "执蓝子"
         }
+    }
+
+    /**
+     * 在每个棋子上面显示步数
+     */
+    public drawChessSteps() {
+        this.gameView.drawSteps(this.gomokuGame.allActions)
     }
 }

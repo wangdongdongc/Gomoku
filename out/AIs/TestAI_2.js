@@ -5,8 +5,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 /**
  * Todo: MinMax 搜索算法进行决策
- * Todo: 更合理的的评价方式
- * Todo: 𝜶-𝜷 剪枝
  */
 var TestAI_2 = (function (_super) {
     __extends(TestAI_2, _super);

@@ -1,7 +1,7 @@
 /**
  * 棋盘上的棋子：黑子、白子、空
  */
-enum Chessman {
+enum Chess {
     None = 0,
     Black = 1, //should equal Player.Black 
     White = 2  //should equal Player.White
@@ -13,8 +13,8 @@ enum Chessman {
  * @param {Player} player 玩家
  * @return {Chess} 玩家的棋子
  */
-function chessOfPlayer(player: GomokuPlayer): Chessman {
-    return Chessman[GomokuPlayer[player]]
+function chessOfPlayer(player: GomokuPlayer): Chess {
+    return Chess[GomokuPlayer[player]]
 }
 
 /**
@@ -22,6 +22,6 @@ function chessOfPlayer(player: GomokuPlayer): Chessman {
  * @param {Player} player 玩家
  * @return {Chess} 对手的棋子
  */
-function chessOfRival(rival: GomokuPlayer): Chessman {
-    return Chessman[GomokuPlayer[rival]]
+function chessOfRival(rival: GomokuPlayer): Chess {
+    return Chess[GomokuPlayer[rival]]
 }

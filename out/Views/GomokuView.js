@@ -37,10 +37,10 @@ var GomokuView = (function (_super) {
      * @param {number} col 第j列(1 ~ 15)
      */
     GomokuView.prototype.putChessOn = function (row, col, chess) {
-        if (chess == Chessman.None)
+        if (chess == Chess.None)
             return;
         var coord = this.getChessPosition(row, col);
-        var style = chess == Chessman.Black ?
+        var style = chess == Chess.Black ?
             this.theme.blackChessStyle :
             this.theme.whiteChessStyle;
         new ChessShape({

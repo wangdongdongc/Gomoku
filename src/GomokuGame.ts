@@ -24,7 +24,7 @@ class GomokuGame {
     allActions: GomokuAction[]
     currentPlayer: GomokuPlayer = GomokuPlayer.White //白子(AI)先行
     gameIsOver: boolean = false
-    winningChesses: Chessman[]
+    winningChesses: Chess[]
 
     constructor(playWithAI: boolean = false) {
         this.chessboard = new Chessboard(this.maxRow, this.maxCol)

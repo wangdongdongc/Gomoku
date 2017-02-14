@@ -29,10 +29,10 @@ class GomokuView extends CanvasView {
      * @param {number} row 第i行(1 ~ 15)
      * @param {number} col 第j列(1 ~ 15)
      */
-    public putChessOn(row: number, col: number, chess: Chessman) {
-        if (chess == Chessman.None) return
+    public putChessOn(row: number, col: number, chess: Chess) {
+        if (chess == Chess.None) return
         let coord = this.getChessPosition(row, col)
-        let style = chess == Chessman.Black ? 
+        let style = chess == Chess.Black ? 
                     this.theme.blackChessStyle : 
                     this.theme.whiteChessStyle
         new ChessShape({

@@ -10,15 +10,16 @@ var GomokuViewController = (function () {
         this.menuView = new MenuView(480, 200, this);
         this.menuView.statusMessage = "执黑子";
         this.gomokuGame = new GomokuGame();
+        this.gomokuDB = new GomokuDB();
         if (playWithAI) {
             this.playWithAI = true;
             this.AI = new TestAI_1();
+            //AI先落子
+            this.AI.putFirstChessInMiddle();
+            this.gomokuGame.putChessOn(8, 8); //game默认白子开局
+            this.gameView.putChessOn(8, 8, Chess.White);
+            this.menuView.chessCount = 1;
         }
-        //AI先落子
-        this.AI.putFirstChessInMiddle();
-        this.gomokuGame.putChessOn(8, 8); //game默认白子开局
-        this.gameView.putChessOn(8, 8, Chessman.White);
-        this.menuView.chessCount = 1;
     }
     Object.defineProperty(GomokuViewController.prototype, "showChessStep", {
         get: function () {
@@ -62,6 +63,7 @@ var GomokuViewController = (function () {
             this.gameView.putChessOn(action.row, action.col, chessOfPlayer(action.player));
         }
         if (this.gomokuGame.gameIsOver) {
+            this.menuView.chessCount = this.menuView.chessCount + 1;
             var whiteWin = void 0, blackWin = void 0;
             if (this.gameView.theme instanceof VividTheme) {
                 whiteWin = "青子胜";
@@ -72,8 +74,11 @@ var GomokuViewController = (function () {
                 blackWin = "黑子胜";
             }
             this.menuView.statusMessage = this.gomokuGame.currentPlayer == 1 ? whiteWin : blackWin;
+            this.gomokuDB.addNewHistory({
+                datetime: new Date(),
+                actions: this.gomokuGame.allActions
+            });
         }
-        this.menuView.chessCount = this.menuView.chessCount + 1;
     };
     /**
      * 更改棋盘主题
@@ -81,6 +86,9 @@ var GomokuViewController = (function () {
     GomokuViewController.prototype.changeTheme = function (theme) {
         this.gameView.theme = theme;
         this.gameView.redrawChessboard(this.gomokuGame.allActions);
+        if (this.showChessStep) {
+            this.drawChessSteps();
+        }
         if (theme instanceof DefaultTheme) {
             this.menuView.statusMessage = "执黑子";
         }

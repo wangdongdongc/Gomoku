@@ -5,6 +5,7 @@ class GomokuViewController {
     gameView: GomokuView //游戏视图
     menuView: MenuView  //菜单视图
     gomokuGame: GomokuGame
+    gomokuDB: GomokuDB
     AI: GomokuAI
     playWithAI: boolean = false
 
@@ -29,15 +30,16 @@ class GomokuViewController {
         this.menuView = new MenuView(480, 200, this)
         this.menuView.statusMessage = "执黑子"
         this.gomokuGame = new GomokuGame()
+        this.gomokuDB = new GomokuDB()
         if (playWithAI) {
             this.playWithAI = true
-            this.AI = new TestAI_1()
+            this.AI = new TestAI_1();
+            //AI先落子
+            (<TestAI_1>this.AI).putFirstChessInMiddle()
+            this.gomokuGame.putChessOn(8, 8) //game默认白子开局
+            this.gameView.putChessOn(8, 8, Chess.White)
+            this.menuView.chessCount = 1
         }
-        //AI先落子
-        (<TestAI_1>this.AI).putFirstChessInMiddle()
-        this.gomokuGame.putChessOn(8, 8) //game默认白子开局
-        this.gameView.putChessOn(8, 8, Chessman.White)
-        this.menuView.chessCount = 1
     }
 
     /**
@@ -68,6 +70,7 @@ class GomokuViewController {
             )
         }
         if (this.gomokuGame.gameIsOver) {
+        this.menuView.chessCount = this.menuView.chessCount + 1
             let whiteWin, blackWin
             if (this.gameView.theme instanceof VividTheme) {
                 whiteWin = "青子胜"; blackWin = "蓝子胜"
@@ -75,8 +78,11 @@ class GomokuViewController {
                 whiteWin = "白子胜"; blackWin = "黑子胜"
             }
             this.menuView.statusMessage = this.gomokuGame.currentPlayer == 1 ? whiteWin : blackWin
+            this.gomokuDB.addNewHistory({
+                datetime: new Date(),
+                actions: this.gomokuGame.allActions
+            })
         }
-        this.menuView.chessCount = this.menuView.chessCount + 1
     }
 
     /**
@@ -85,6 +91,9 @@ class GomokuViewController {
     public changeTheme(theme: Theme) {
         this.gameView.theme = theme
         this.gameView.redrawChessboard(this.gomokuGame.allActions)
+        if (this.showChessStep) {
+            this.drawChessSteps()
+        }
         if (theme instanceof DefaultTheme) {
             this.menuView.statusMessage = "执黑子"
         } else if (theme instanceof VividTheme) {

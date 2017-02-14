@@ -1,8 +1,6 @@
 
 /**
  * Todo: MinMax 搜索算法进行决策
- * Todo: 更合理的的评价方式
- * Todo: 𝜶-𝜷 剪枝
  */
 class TestAI_2 extends GomokuAI {
     next: GomokuAction

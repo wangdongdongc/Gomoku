@@ -11,7 +11,7 @@ var Chessboard = (function () {
         for (var i = 0; i < numberOfRows; i++) {
             var row = [];
             for (var j = 0; j < numberOfColumns; j++) {
-                row.push(Chessman.None);
+                row.push(Chess.None);
             }
             this.chessboard.push(row);
         }
@@ -27,7 +27,7 @@ var Chessboard = (function () {
             return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != givenChess : undefined;
         }
         else {
-            return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chessman.None : undefined;
+            return this.validRowAndCol(row, col) ? this.chessboard[row - 1][col - 1] != Chess.None : undefined;
         }
     };
     Chessboard.prototype.getChess = function (row, col) {

@@ -87,7 +87,7 @@ var TestAI_1 = (function (_super) {
             console.log("Attack: (" + this.next.row + ", " + this.next.col + ") s:" + this.scores[I][J]);
         }
     };
-    TestAI_1.prototype.nextAction = function () {
+    TestAI_1.prototype.getNextAction = function () {
         return this.next;
     };
     /**

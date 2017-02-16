@@ -16,5 +16,5 @@ abstract class GomokuAI {
     /**
      * 给出下一次动作
      */
-    abstract nextAction(): GomokuAction
+    abstract getNextAction(): GomokuAction
 }

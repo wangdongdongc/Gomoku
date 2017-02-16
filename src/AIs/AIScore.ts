@@ -2,15 +2,29 @@
  * 棋型收益估分(不可变)
  */
 class AIScore {
-    static readonly WillSucceed = 100
-    static readonly ooooo = 100
-    static readonly oooo = 49
-    static readonly ooo = 6
-    static readonly Ioooo = 6
-    static readonly Iooo = 3
-    static readonly oo = 3
+    /**立即获胜 */
+    static readonly WillWin = 1000
+    /**无法获胜(一定无法达成5连) */
+    static readonly WillFail = 0
+    static readonly Min = 0
+    static readonly ooooo = 1000
+    static readonly oooo = 100
+    static readonly ooo = 40
+    static readonly Ioooo = 40
+    static readonly Iooo = 5
+    static readonly oo = 5
     static readonly Ioo = 1
     static readonly o = 0
+    static readonly Io = 0
+
+    static readonly ooo_oo = AIScore.ooo + AIScore.oo
+    static readonly Iooo_oo = AIScore.Iooo + AIScore.oo
+    static readonly oo_oo = AIScore.oo + AIScore.oo
+    static readonly Ioo_oo = AIScore.Ioooo - 1
+    static readonly o_oo = AIScore.ooo - 1
+    static readonly Io_oo = AIScore.Io + AIScore.oo
+    static readonly o_o = AIScore.o + AIScore.o
+    static readonly Io_o = AIScore.Io + AIScore.o
 }
 
 

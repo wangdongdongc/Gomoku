@@ -6,15 +6,28 @@ var AIScore = (function () {
     }
     return AIScore;
 }());
-AIScore.WillSucceed = 100;
-AIScore.ooooo = 100;
-AIScore.oooo = 49;
-AIScore.ooo = 6;
-AIScore.Ioooo = 6;
-AIScore.Iooo = 3;
-AIScore.oo = 3;
+/**立即获胜 */
+AIScore.WillWin = 1000;
+/**无法获胜(一定无法达成5连) */
+AIScore.WillFail = 0;
+AIScore.Min = 0;
+AIScore.ooooo = 1000;
+AIScore.oooo = 100;
+AIScore.ooo = 40;
+AIScore.Ioooo = 40;
+AIScore.Iooo = 5;
+AIScore.oo = 5;
 AIScore.Ioo = 1;
 AIScore.o = 0;
+AIScore.Io = 0;
+AIScore.ooo_oo = AIScore.ooo + AIScore.oo;
+AIScore.Iooo_oo = AIScore.Iooo + AIScore.oo;
+AIScore.oo_oo = AIScore.oo + AIScore.oo;
+AIScore.Ioo_oo = AIScore.Ioooo - 1;
+AIScore.o_oo = AIScore.ooo - 1;
+AIScore.Io_oo = AIScore.Io + AIScore.oo;
+AIScore.o_o = AIScore.o + AIScore.o;
+AIScore.Io_o = AIScore.Io + AIScore.o;
 /**
  * 棋型威胁估分(不可变)
  */

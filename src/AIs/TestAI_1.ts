@@ -96,7 +96,7 @@ class TestAI_1 extends GomokuAI {
         }
     }
     
-    nextAction() {
+    getNextAction() {
         return this.next
     }
 

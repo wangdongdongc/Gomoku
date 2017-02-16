@@ -33,9 +33,9 @@ class GomokuViewController {
         this.gomokuDB = new GomokuDB()
         if (playWithAI) {
             this.playWithAI = true
-            this.AI = new TestAI_1();
+            this.AI = new AI.TestAI_2();
             //AI先落子
-            (<TestAI_1>this.AI).putFirstChessInMiddle()
+            (<AI.TestAI_2>this.AI).putFirstChessInMiddle()
             this.gomokuGame.putChessOn(8, 8) //game默认白子开局
             this.gameView.putChessOn(8, 8, Chess.White)
             this.menuView.chessCount = 1
@@ -50,8 +50,8 @@ class GomokuViewController {
         //玩家落子
         let col = Math.round(x / this.gameView.horizontalLineGap)
         let row = Math.round(y / this.gameView.verticalLineGap)
-        this.gomokuGame.putChessOn(row, col)
-        if (this.gomokuGame.currentPlayer != GomokuPlayer.White) {return} //防止乱按
+        if (this.gomokuGame.currentPlayer != GomokuPlayer.Black) {return} //防止乱按先检查
+        this.gomokuGame.putChessOn(row, col)//再操作
         this.gameView.putChessOn(
             this.gomokuGame.lastAction.row,
             this.gomokuGame.lastAction.col, 
@@ -61,7 +61,7 @@ class GomokuViewController {
         //AI落子
         if (this.playWithAI && !this.gomokuGame.gameIsOver) {
             this.AI.analysAction(this.gomokuGame.lastAction)
-            let action = this.AI.nextAction()
+            let action = this.AI.getNextAction()
             this.gomokuGame.putChessOn(action.row, action.col)
             this.gameView.putChessOn(
                 action.row,
@@ -69,8 +69,8 @@ class GomokuViewController {
                 chessOfPlayer(action.player)
             )
         }
-        if (this.gomokuGame.gameIsOver) {
         this.menuView.chessCount = this.menuView.chessCount + 1
+        if (this.gomokuGame.gameIsOver) {
             let whiteWin, blackWin
             if (this.gameView.theme instanceof VividTheme) {
                 whiteWin = "青子胜"; blackWin = "蓝子胜"

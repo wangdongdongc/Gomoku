@@ -13,7 +13,7 @@ var GomokuViewController = (function () {
         this.gomokuDB = new GomokuDB();
         if (playWithAI) {
             this.playWithAI = true;
-            this.AI = new TestAI_1();
+            this.AI = new AI.TestAI_2();
             //AI先落子
             this.AI.putFirstChessInMiddle();
             this.gomokuGame.putChessOn(8, 8); //game默认白子开局
@@ -49,21 +49,21 @@ var GomokuViewController = (function () {
         //玩家落子
         var col = Math.round(x / this.gameView.horizontalLineGap);
         var row = Math.round(y / this.gameView.verticalLineGap);
-        this.gomokuGame.putChessOn(row, col);
-        if (this.gomokuGame.currentPlayer != GomokuPlayer.White) {
+        if (this.gomokuGame.currentPlayer != GomokuPlayer.Black) {
             return;
-        } //防止乱按
+        } //防止乱按先检查
+        this.gomokuGame.putChessOn(row, col); //再操作
         this.gameView.putChessOn(this.gomokuGame.lastAction.row, this.gomokuGame.lastAction.col, chessOfPlayer(this.gomokuGame.lastAction.player));
         this.menuView.chessCount = this.menuView.chessCount + 1;
         //AI落子
         if (this.playWithAI && !this.gomokuGame.gameIsOver) {
             this.AI.analysAction(this.gomokuGame.lastAction);
-            var action = this.AI.nextAction();
+            var action = this.AI.getNextAction();
             this.gomokuGame.putChessOn(action.row, action.col);
             this.gameView.putChessOn(action.row, action.col, chessOfPlayer(action.player));
         }
+        this.menuView.chessCount = this.menuView.chessCount + 1;
         if (this.gomokuGame.gameIsOver) {
-            this.menuView.chessCount = this.menuView.chessCount + 1;
             var whiteWin = void 0, blackWin = void 0;
             if (this.gameView.theme instanceof VividTheme) {
                 whiteWin = "青子胜";

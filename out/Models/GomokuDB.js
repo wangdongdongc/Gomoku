@@ -24,7 +24,7 @@ var GomokuDB = (function () {
             if (!db.objectStoreNames.contains(GomokuDB.HistoryStoreName)) {
                 db.createObjectStore(GomokuDB.HistoryStoreName, { keyPath: GomokuDB.HistoryKeyPath });
             }
-            console.log("DB version changed for " + event.oldVersion + " to " + event.newVersion);
+            console.log("DB version changed from " + event.oldVersion + " to " + event.newVersion);
         };
     }
     GomokuDB.prototype.addNewHistory = function (history) {
@@ -36,9 +36,6 @@ var GomokuDB = (function () {
     };
     return GomokuDB;
 }());
-/**
- * The version of the database determines the database schema
- */
 GomokuDB.DBVersion = 2;
 GomokuDB.DBName = "gomokudb";
 GomokuDB.HistoryStoreName = "history";

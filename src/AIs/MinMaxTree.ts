@@ -56,25 +56,4 @@ export function minmaxDecision(state: State, game: Game) {
     }
 }
 
-/**
- * 用于 AI 决策的 Min-Max 树
- * 
- * 对于双人零和博弈来说，Min-Max 树考虑：
- * 1、玩家 Max 将走出使自己收益最大化的一步
- * 2、玩家 Min 将走出使玩家 Max 收益最小化的一步
- * 
- * 假设玩家 Max 正在决策如何走第 n 步，那么 Max 走出这一步后，
- * 轮到玩家 Min 走第 n+1 步时，Min 将在 Max 的第 n 步的基础上走出使 Max 收益最小的一步
- * 
- * 因此玩家 Max 所走出的第 n 步，
- * 就是在考虑了 Min 将在 n+1 步中走出对自己最不利的一步的情况下，
- * 在第 n 步实现这两步之内的最大利益
- */
-class MinMaxTree {
-    constructor() {
-
-    }
-
-}//class MinMaxTree
-
 }//namespace AI

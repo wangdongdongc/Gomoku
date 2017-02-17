@@ -7,6 +7,7 @@ class AIScore {
     /**无法获胜(一定无法达成5连) */
     static readonly WillFail = 0
     static readonly Min = 0
+    static readonly Dangerous = 60
     static readonly ooooo = 1000
     static readonly oooo = 100
     static readonly ooo = 40
@@ -17,11 +18,11 @@ class AIScore {
     static readonly o = 0
     static readonly Io = 0
 
-    static readonly ooo_oo = AIScore.ooo + AIScore.oo
-    static readonly Iooo_oo = AIScore.Iooo + AIScore.oo
-    static readonly oo_oo = AIScore.oo + AIScore.oo
-    static readonly Ioo_oo = AIScore.Ioooo - 1
-    static readonly o_oo = AIScore.ooo - 1
+    static readonly ooo_oo = AIScore.ooo - 1
+    static readonly Iooo_oo = AIScore.Ioooo - 1
+    static readonly oo_oo = AIScore.ooo_oo
+    static readonly Ioo_oo = AIScore.Iooo_oo
+    static readonly o_oo = AIScore.ooo_oo
     static readonly Io_oo = AIScore.Io + AIScore.oo
     static readonly o_o = AIScore.o + AIScore.o
     static readonly Io_o = AIScore.Io + AIScore.o

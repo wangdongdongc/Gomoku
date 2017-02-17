@@ -300,7 +300,7 @@ var AI;
         TestAI_2.prototype.getNextAction = function () {
             var ppos = this.getMaxProfitPosition();
             var tpos = this.getMaxThreatPosition();
-            var pos = (this.threats[tpos.row][tpos.col] > AIScore.ooo / 2 * 3) ?
+            var pos = (this.threats[tpos.row][tpos.col] > AIScore.Dangerous) ?
                 tpos : ppos;
             this.putChessOn(pos, AIChess.AI);
             return {

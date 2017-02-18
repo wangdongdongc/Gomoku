@@ -1,16 +1,29 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
     <head>
         <title>Gomoku Game</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Bootstrap CSS-->
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <!--jQuery-->
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <!--Bootstrap JS-->
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     </head>
+
     <body>
-        <div>
-            <canvas id="game"></canvas>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <canvas id="game" class="center-block"></canvas>
+                <canvas id="menu" class="center-block"></canvas>
+            </div>
         </div>
-        <div>
-            <canvas id="menu"></canvas>
-        </div>
+    </div>
     </body>
+
+    <!--下列JS文件对应的Typescript源码均位于src/目录下-->
     <script src="out/Shapes/Shape.js"></script>
     <script src="out/Shapes/Circle.js"></script>
     <script src="out/Shapes/Rectangle.js"></script>
@@ -33,7 +46,7 @@
     <script src="out/AIs/GomokuAI.js"></script>
     <script src="out/AIs/AIScore.js"></script>
     <script src="out/AIs/Matrix.js"></script>
-    <script src="out/AIs/TestAI_1.js"></script>
+    <!--<script src="out/AIs/TestAI_1.js"></script> -->
     <script src="out/AIs/TestAI_2.js"></script>
     <script src="out/GomokuGame.js"></script>
     <script src="out/GomokuViewController.js"></script>

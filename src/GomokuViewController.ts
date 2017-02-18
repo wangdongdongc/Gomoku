@@ -51,7 +51,7 @@ class GomokuViewController {
         let col = Math.round(x / this.gameView.horizontalLineGap)
         let row = Math.round(y / this.gameView.verticalLineGap)
         if (this.gomokuGame.currentPlayer != GomokuPlayer.Black) {return} //防止乱按先检查
-        this.gomokuGame.putChessOn(row, col)//再操作
+        if (!this.gomokuGame.putChessOn(row, col)) {return}//再操作
         this.gameView.putChessOn(
             this.gomokuGame.lastAction.row,
             this.gomokuGame.lastAction.col, 

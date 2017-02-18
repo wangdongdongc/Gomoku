@@ -336,7 +336,7 @@ export class TestAI_2 extends GomokuAI {
     public getNextAction(): GomokuAction {
         let ppos = this.getMaxProfitPosition()
         let tpos = this.getMaxThreatPosition()
-        let pos = (this.threats[tpos.row][tpos.col] > AIScore.Dangerous) ?
+        let pos = (this.threats[tpos.row][tpos.col] > AIScore.Dangerous && this.threats[tpos.row][tpos.col] > this.profits[ppos.row][ppos.col]) ?
                     tpos : ppos
         this.putChessOn(pos, AIChess.AI)
         return {

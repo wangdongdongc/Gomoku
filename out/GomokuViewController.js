@@ -52,7 +52,9 @@ var GomokuViewController = (function () {
         if (this.gomokuGame.currentPlayer != GomokuPlayer.Black) {
             return;
         } //防止乱按先检查
-        this.gomokuGame.putChessOn(row, col); //再操作
+        if (!this.gomokuGame.putChessOn(row, col)) {
+            return;
+        } //再操作
         this.gameView.putChessOn(this.gomokuGame.lastAction.row, this.gomokuGame.lastAction.col, chessOfPlayer(this.gomokuGame.lastAction.player));
         this.menuView.chessCount = this.menuView.chessCount + 1;
         //AI落子

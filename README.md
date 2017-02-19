@@ -1,7 +1,7 @@
 # Gomoku 五子棋游戏
 使用 Typescript 编写的带有简单 AI 的五子棋小游戏 (无禁手)。
 
-[Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象与静态类型支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期对代码进行检查，执行安全的重构操作(重命名)。
+> [Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象与静态类型支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期对代码进行检查，执行安全的重构操作(重命名)。
 
 ## 运行
 * [在线玩](https://wangdongdongc.github.io/Gomoku/index.html)
@@ -12,7 +12,7 @@
 
 1. 安装 [npm](https://www.npmjs.com/) 包管理器
 2. 进入项目根目录执行 `npm install` 以安装 Typescript
-3. 安装完成后运行 `npm run build` 以启动编译 (相当于 `./node_modules/.bin/tsc --sourcemap`, 编译选项见 `tsconfig.json`)
+3. 安装完成后运行 `npm run build` 以启动编译 (或 `./node_modules/.bin/tsc --sourcemap`, 编译选项见 `tsconfig.json`)
 
 ![image](http://raw.github.com/wangdongdongc/Gomoku/master/images/github/demo.png)
 
@@ -50,23 +50,21 @@ View 接受用户的在 UI 上进行的操作（鼠标点击，鼠标滑动）�
 游戏自带 AI，能够与玩家进行对战
 ```
 src/AIs/AIScore.ts 棋型估分
-src/AIs/TestAI_1.ts  AI
+src/AIs/TestAI_2.ts  AI
 ```
 ### AI 如何决策
 AI 能够看到当前棋盘的棋子分布，就像玩家一样
 
-AI 的决策分成了两步
+AI 的决策包含防守和进攻
 
-1. 防守：当玩家摆出能够一步必杀的棋局时，选择在能够一击必杀的位置上落子防御。能够一击必杀的棋局非常复杂，这里只能考虑最基本的类型。1、oooo 2、两个或以上的 ooo 或 |oooo 同时出现时。
+1. 防守：当玩家摆出能够危险的棋局时，在危险位置上落子防御。危险的棋局非常复杂，这里仅考虑一些基本的类型。例如：四连、两个三连同时出现。
 
-2. 进攻：若不会出现有 oooo 或两个 ooo 或 |oooo 以上同时出现，一般选择进攻。正如 AI 能够判断玩家可能摆出这几种基本的必杀棋局，AI 也能判断是否可以下出这些棋局。
+2. 进攻：若无危险棋局，一般选择进攻。正如 AI 能够判断玩家可能摆出危险的棋局，AI 也能判断是否可以下出这些攻击力强的棋局。
 
 ### AI 如何判断棋局
 AI 对不同的棋局进行估分，在不同的位置落子能够产生不同的棋局，选取分数最高的棋局落子。
 
-[TestAI_1](https://github.com/wangdongdongc/Gomoku/blob/master/src/AIs/TestAI_1.ts) 仅对落子点附近的邻接的区域进行估分，并没有大局观。
-
-AI 将尝试在棋盘的每一个空位置落子，然后检查上下左右与主对角线副对角线方向有多少个连子，连子的两边是否被堵住，这这些信息交给一个分值判断函数。
+AI 将尝试在棋盘的每一个空位置落子，然后检查上下左右与主对角线副对角线方向有多少个连子，连子的两边是否被堵住，连子中是否有间隔，这这些信息交给一个分值判断函数。
 e.g.
 ```javascript
 //这是一个进行分值判断的函数，它根据连子的个数(line)，两侧是否被堵住(block1, block2)，给出分数

@@ -38,6 +38,13 @@ var GomokuGame = (function () {
         return false;
     };
     /**
+     * 使用指定的棋局复盘
+     * 当前棋局将被覆盖
+     */
+    GomokuGame.prototype.replay = function () {
+        //Todo
+    };
+    /**
      * 判断最近的一次游戏动作是否使一方获胜
      *  (以最近的一次落子坐标为基准,分别检查横向、纵向、主对角线、副对角线方向是否存在获胜棋组
      *   并保存获胜棋组)

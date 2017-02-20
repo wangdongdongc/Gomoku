@@ -15,7 +15,7 @@ interface Bound {
 /**
  * 集成 Canvas 元素的视图类
  */
-abstract class CanvasView {
+abstract class AbstractCanvasView {
     /**
      * canvas元素
      */

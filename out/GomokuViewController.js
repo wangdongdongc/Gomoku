@@ -6,11 +6,16 @@ var GomokuViewController = (function () {
         if (playWithAI === void 0) { playWithAI = false; }
         this.playWithAI = false;
         this._showChessStep = false;
+        this.historiesHaveLoaded = false;
+        //Views
         this.gameView = new GomokuView(480, 480, this);
         this.menuView = new MenuView(480, 200, this);
         this.menuView.statusMessage = "执黑子";
+        this.dialogView = new DialogView();
+        //Models
         this.gomokuGame = new GomokuGame();
         this.gomokuDB = new GomokuDB();
+        this.loadHistory();
         if (playWithAI) {
             this.playWithAI = true;
             this.AI = new AI.TestAI_2();
@@ -40,6 +45,24 @@ var GomokuViewController = (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * 读取数据库,将历史记录写入对话框视图
+     */
+    GomokuViewController.prototype.loadHistory = function () {
+        var _this = this;
+        this.gomokuDB.getAll(function (item) {
+            //读取并处理一个对象
+            var date = item.datetime;
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var winner = item.actions[item.actions.length - 1].player == GomokuPlayer.Black
+                ? "玩家" : "AI";
+            _this.dialogView.addItem(year + "\u5E74" + month + "\u6708" + day + "\u65E5-" + hour + "\u65F6" + minute + "\u5206  " + winner + "\u83B7\u80DC"); //Todo
+        });
+    };
     /**
      * 响应棋盘上的点击
      */
@@ -76,7 +99,7 @@ var GomokuViewController = (function () {
                 blackWin = "黑子胜";
             }
             this.menuView.statusMessage = this.gomokuGame.currentPlayer == 1 ? whiteWin : blackWin;
-            this.gomokuDB.addNewHistory({
+            this.gomokuDB.add({
                 datetime: new Date(),
                 actions: this.gomokuGame.allActions
             });
@@ -103,6 +126,12 @@ var GomokuViewController = (function () {
      */
     GomokuViewController.prototype.drawChessSteps = function () {
         this.gameView.drawSteps(this.gomokuGame.allActions);
+    };
+    /**
+     * 显示对话框
+     */
+    GomokuViewController.prototype.toggleDialog = function () {
+        this.dialogView.toggle();
     };
     return GomokuViewController;
 }());

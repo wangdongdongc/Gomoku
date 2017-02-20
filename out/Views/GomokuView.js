@@ -109,5 +109,5 @@ var GomokuView = (function (_super) {
         });
     };
     return GomokuView;
-}(CanvasView));
+}(AbstractCanvasView));
 //# sourceMappingURL=GomokuView.js.map

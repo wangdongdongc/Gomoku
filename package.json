@@ -14,6 +14,7 @@
   "author": "DongdongWang",
   "license": "MIT",
   "devDependencies": {
+    "@types/jquery": "^2.0.40",
     "typescript": "^2.1.5"
   },
   "dependencies": {

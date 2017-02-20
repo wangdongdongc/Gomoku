@@ -64,6 +64,8 @@ var MenuView = (function (_super) {
         this.button2 = new TwoHalfCircle(centerX1 + this.buttonGap, centerY, radius, "rgb(225,233,243)", "rgb(30,157,255)");
         this.button3 = new TextCircle(centerX1 + this.buttonGap * 2, centerY, radius, 3);
         this.button4 = new Circle(centerX1 + this.buttonGap * 3, centerY, radius);
+        this.button4.fill = true;
+        this.button4.fillColor = "grey";
         this.button1.borderWidth = this.buttonBoderWidth;
         this.button2.borderWidth = this.buttonBoderWidth;
         this.button3.borderWidth = this.buttonBoderWidth;
@@ -97,6 +99,13 @@ var MenuView = (function (_super) {
         this.button3.drawOn(this.context);
         this.context.restore();
     };
+    MenuView.prototype.redrawButton4 = function () {
+        this.context.clearRect(this.buttonGap * 3, 0, this.buttonGap, this.bound.height / 2);
+        this.context.save();
+        this.context.globalAlpha = this.button4Alpha;
+        this.button4.drawOn(this.context);
+        this.context.restore();
+    };
     /**
      * 在状态栏绘制状态信息
      */
@@ -124,6 +133,9 @@ var MenuView = (function (_super) {
                 else {
                     _this.viewController.showChessStep = true;
                 }
+            }
+            if (Math.pow(event.offsetX - _this.button4.centerX, 2) + Math.pow(event.offsetY - _this.button4.centerY, 2) < Math.pow(_this.button4.radius, 2)) {
+                _this.viewController.toggleDialog();
             }
         });
         /**
@@ -155,10 +167,18 @@ var MenuView = (function (_super) {
                 _this.button3Alpha = MenuView.untouchedButtonAlpha;
                 _this.redrawButton3();
             }
+            if (Math.pow(event.offsetX - _this.button4.centerX, 2) + Math.pow(event.offsetY - _this.button4.centerY, 2) < Math.pow(_this.button4.radius, 2)) {
+                _this.button4Alpha = MenuView.touchedButtonAlpha;
+                _this.redrawButton4();
+            }
+            else {
+                _this.button4Alpha = MenuView.untouchedButtonAlpha;
+                _this.redrawButton4();
+            }
         });
     };
     return MenuView;
-}(CanvasView));
+}(AbstractCanvasView));
 MenuView.MenuCanvasID = "menu";
 MenuView.untouchedButtonAlpha = 0.5;
 MenuView.touchedButtonAlpha = 1;

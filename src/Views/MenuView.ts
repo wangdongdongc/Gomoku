@@ -1,6 +1,6 @@
 
 
-class MenuView extends CanvasView {
+class MenuView extends AbstractCanvasView {
     static readonly MenuCanvasID = "menu"
 
     /**
@@ -89,6 +89,8 @@ class MenuView extends CanvasView {
 
         this.button3 = new TextCircle(centerX1 + this.buttonGap * 2, centerY, radius, 3)
         this.button4 = new Circle(centerX1 + this.buttonGap * 3, centerY, radius)
+        this.button4.fill = true
+        this.button4.fillColor = "grey"
 
         this.button1.borderWidth = this.buttonBoderWidth
         this.button2.borderWidth = this.buttonBoderWidth
@@ -128,6 +130,14 @@ class MenuView extends CanvasView {
         this.context.restore()
     }
 
+    private redrawButton4() {
+        this.context.clearRect(this.buttonGap * 3, 0, this.buttonGap, this.bound.height / 2)
+        this.context.save()
+        this.context.globalAlpha = this.button4Alpha
+        this.button4.drawOn(this.context)
+        this.context.restore()
+    }
+
     /**
      * 在状态栏绘制状态信息
      */
@@ -159,6 +169,10 @@ class MenuView extends CanvasView {
                     this.viewController.showChessStep = true
                 }
             }
+
+            if (Math.pow(event.offsetX - this.button4.centerX, 2) + Math.pow(event.offsetY - this.button4.centerY, 2) < Math.pow(this.button4.radius, 2)) {
+                this.viewController.toggleDialog()
+            }
         })
 
         /**
@@ -188,6 +202,14 @@ class MenuView extends CanvasView {
             } else {
                 this.button3Alpha = MenuView.untouchedButtonAlpha
                 this.redrawButton3()
+            }
+
+            if (Math.pow(event.offsetX - this.button4.centerX, 2) + Math.pow(event.offsetY - this.button4.centerY, 2) < Math.pow(this.button4.radius, 2)) {
+                this.button4Alpha = MenuView.touchedButtonAlpha
+                this.redrawButton4()
+            } else {
+                this.button4Alpha = MenuView.untouchedButtonAlpha
+                this.redrawButton4()
             }
         })
     }

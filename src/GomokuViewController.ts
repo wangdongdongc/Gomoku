@@ -4,6 +4,7 @@
 class GomokuViewController {
     gameView: GomokuView //游戏视图
     menuView: MenuView  //菜单视图
+    dialogView: DialogView //模态对话框视图
     gomokuGame: GomokuGame
     gomokuDB: GomokuDB
     AI: GomokuAI
@@ -25,12 +26,38 @@ class GomokuViewController {
         }
     }
 
+
+    private historiesHaveLoaded: boolean = false
+    /**
+     * 读取数据库,将历史记录写入对话框视图
+     */
+    private loadHistory() {
+        this.gomokuDB.getAll((item: GomokuHistory) => {
+            //读取并处理一个对象
+            let date = item.datetime
+            let year = date.getFullYear()
+            let month = date.getMonth() + 1
+            let day = date.getDate()
+            let hour = date.getHours()
+            let minute = date.getMinutes()
+            let winner = item.actions[item.actions.length - 1].player == GomokuPlayer.Black
+                ? "玩家" : "AI"
+            this.dialogView.addItem(`${year}年${month}月${day}日-${hour}时${minute}分  ${winner}获胜`) //Todo
+        })
+    }
+
     constructor(playWithAI: boolean = false) {
+        //Views
         this.gameView = new GomokuView(480, 480, this)
         this.menuView = new MenuView(480, 200, this)
         this.menuView.statusMessage = "执黑子"
+        this.dialogView = new DialogView()
+        
+        //Models
         this.gomokuGame = new GomokuGame()
         this.gomokuDB = new GomokuDB()
+        this.loadHistory()
+
         if (playWithAI) {
             this.playWithAI = true
             this.AI = new AI.TestAI_2();
@@ -78,7 +105,7 @@ class GomokuViewController {
                 whiteWin = "白子胜"; blackWin = "黑子胜"
             }
             this.menuView.statusMessage = this.gomokuGame.currentPlayer == 1 ? whiteWin : blackWin
-            this.gomokuDB.addNewHistory({
+            this.gomokuDB.add({
                 datetime: new Date(),
                 actions: this.gomokuGame.allActions
             })
@@ -106,5 +133,12 @@ class GomokuViewController {
      */
     public drawChessSteps() {
         this.gameView.drawSteps(this.gomokuGame.allActions)
+    }
+
+    /**
+     * 显示对话框
+     */
+    public toggleDialog() {
+        this.dialogView.toggle()
     }
 }

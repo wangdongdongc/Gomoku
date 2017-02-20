@@ -1,7 +1,7 @@
 /**
  * 五子棋游戏 (MVC) 的 View 层
  */
-class GomokuView extends CanvasView {
+class GomokuView extends AbstractCanvasView {
     theme: Theme = new DefaultTheme()
     stepNumberFont: string = "15px menlo"
 

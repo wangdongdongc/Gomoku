@@ -16,14 +16,37 @@
 
     <body>
     <div class="container">
+        <!--对话框视图-->
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" id="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">历史记录</h4>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <ul class="list-group" id="history-list">
+                        </ul>
+                    </div>
+                    <div class="modal-footer" id="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <canvas id="game" class="center-block"></canvas>
-                <canvas id="menu" class="center-block"></canvas>
+                <canvas id="game" class="center-block"></canvas> <!--五子棋视图-->
+                <canvas id="menu" class="center-block"></canvas> <!--菜单视图-->
             </div>
         </div>
     </div>
     </body>
+    
 
     <!--下列JS文件对应的Typescript源码均位于src/目录下-->
     <script src="out/Shapes/Shape.js"></script>
@@ -41,6 +64,7 @@
     <script src="out/Views/CanvasView.js"></script>
     <script src="out/Views/GomokuView.js"></script>
     <script src="out/Views/MenuView.js"></script>
+    <script src="out/Views/DialogView.js"></script>
     <script src="out/Models/Player.js"></script>
     <script src="out/Models/Chess.js"></script>
     <script src="out/Models/Chessboard.js"></script>

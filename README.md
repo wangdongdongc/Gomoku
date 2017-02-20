@@ -3,6 +3,13 @@
 
 > [Typescript](http://www.typescriptlang.org/) 是微软的一个[开源项目](https://github.com/Microsoft/TypeScript)，在 Javascript 现有语法的基础上提供了与 C++、Java 类似的正宗的面向对象与静态类型支持。使用 Visual Studio 或 Visual Studio Code 能够在编译期对代码进行检查，执行安全的重构操作(重命名)。
 
+
+*游戏实现了*
+
+1. 基于 HTML Canvas 元素的界面
+2. 五子棋 AI
+3. 主题切换、查看步数
+
 ## 运行
 * [在线玩](https://wangdongdongc.github.io/Gomoku/index.html)
 * 下载源代码，在浏览器中打开 `index.html`
@@ -22,15 +29,16 @@
 对应的源码如下
 
 ### *Model*
-实现五子棋的规则, 判断胜负
 ```
-src/GomokuGame.ts
+src/GomokuGame.ts 游戏规则实现
+src/Models/GomokuDB.ts 历史记录存取
 ```
 ### *View*
 实现 UI
 ```
 src/Views/ComokuView.ts 游戏视图
 src/Views/MenuView.ts 菜单视图
+src/Views/DialogView.ts 对话框视图
 ```
 UI 基于 HTML5 [Canvas](https://zh.wikipedia.org/wiki/Canvas_(HTML%E5%85%83%E7%B4%A0)) 实现。Canvas 是 HTML5 的一个元素，它在页面上嵌入一个画布，并使用 Javascript 在上面绘制线条，形状，图像。
 

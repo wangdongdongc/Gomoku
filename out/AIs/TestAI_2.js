@@ -302,6 +302,8 @@ var AI;
             var tpos = this.getMaxThreatPosition();
             var pos = (this.threats[tpos.row][tpos.col] > AIScore.Dangerous && this.threats[tpos.row][tpos.col] > this.profits[ppos.row][ppos.col]) ?
                 tpos : ppos;
+            if (this.profits[ppos.row][ppos.col] == AIScore.ooooo)
+                pos = ppos;
             this.putChessOn(pos, AIChess.AI);
             return {
                 row: pos.row + 1,

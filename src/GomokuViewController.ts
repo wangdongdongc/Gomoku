@@ -77,8 +77,8 @@ class GomokuViewController {
         //玩家落子
         let col = Math.round(x / this.gameView.horizontalLineGap)
         let row = Math.round(y / this.gameView.verticalLineGap)
-        if (this.gomokuGame.currentPlayer != GomokuPlayer.Black) {return} //防止乱按先检查
-        if (!this.gomokuGame.putChessOn(row, col)) {return}//再操作
+        if (this.gomokuGame.currentPlayer != GomokuPlayer.Black) {return} //检查是否该玩家落子（防乱按
+        if (!this.gomokuGame.putChessOn(row, col)) {return}
         this.gameView.putChessOn(
             this.gomokuGame.lastAction.row,
             this.gomokuGame.lastAction.col, 
@@ -98,6 +98,7 @@ class GomokuViewController {
         }
         this.menuView.chessCount = this.menuView.chessCount + 1
         if (this.gomokuGame.gameIsOver) {
+            //游戏结束，显示结束信息
             let whiteWin, blackWin
             if (this.gameView.theme instanceof VividTheme) {
                 whiteWin = "青子胜"; blackWin = "蓝子胜"
